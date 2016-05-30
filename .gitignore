@@ -11,9 +11,9 @@ Thumbs.db
 routes.py
 logging.conf
 ./*.zip
-./databases
-./errors
-./sessions
-./uploads
-./tests
-./cache
+databases/
+errors/
+sessions/
+uploads/
+tests/
+cache/
