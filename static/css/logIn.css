@@ -1,0 +1,74 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #FFFFFF;
+}
+
+header, .main, footer {
+	background: #FFFFFF;
+	width: 90%;
+	max-width: 1060px;
+	margin: 20px auto;	/* Esto hace que se centre (con espaciado de 20px) */
+}
+
+header nav{
+	overflow: hidden;	/* Resuelve problema con float:right */
+	background: #AFC1CB;
+	padding: 4px 5px;
+}
+
+header nav ul {
+	list-style: none;	/* Quita los puntos */
+}
+
+header nav ul li {
+	float: right;
+	padding: 0px 3px;
+}
+
+header nav ul li a {
+	text-decoration: none;
+}
+
+.main .contenido {
+	width: 80%;
+	float: left;
+	padding: 2%;
+	/*border-style: solid;*/
+}
+
+#titulo{
+	color: black;
+	margin: 25px auto;
+	text-align: center;
+}
+
+footer {
+	background: #AFC1CB;
+	text-align: center;
+	margin: auto auto;
+	clear: both;
+	padding: 10px 0px;
+}
+
+footer nav{
+	overflow: hidden;	/* Resuelve problema con float:right */
+	background: #AFC1CB;
+	padding: 4px 5px;
+}
+
+footer nav ul {
+	list-style: none;	/* Quita los puntos */
+}
+
+footer nav ul li {
+	float: right;
+	padding: 0px 3px;
+}
+
+footer nav ul li a {
+	text-decoration: none;
+}

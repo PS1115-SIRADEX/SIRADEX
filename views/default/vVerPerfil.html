@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{{include 'layout.html'}}
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		{{include 'web2py_ajax.html'}}
+		<!-- hago el link con el CSS de esta pagina -->
+		<link href="{{=URL('static', 'css/verPerfil.css')}}" rel="stylesheet" type="text/css" />
+		<title> SIRADEX </title>
+		
+	</head>
+
+	<body>
+		<header>
+			<!-- Banner de SIRADEX -->
+			<div id = "logo">
+				{{=IMG(_src=URL('static', 'images/banner.jpg')) }}
+			</div>
+			
+			<!-- Menu del headder -->
+			<nav>
+				<ul>
+					<li><a href = "#">Ayuda</a></li>
+					<li> | </li>
+					<li><a href = "#">Contactenos</a></li>
+					<li> | </li>
+					<li><a href = "#">Busqueda</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('index')}}">Inicio</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
+					<!-- No se como hacer esto en web2py --^  -->
+				</ul>
+			</nav>
+            <ul class="nav navbar-nav navbar-right">
+            {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+            </ul>
+		</header>
+			
+		<!-- Contenido principal de la pagina -->
+		<section class = "main">
+			<h4> 
+				<div id ="titulo"> Mi Perfil </div>
+			</h4>
+			<br>
+			<h4>
+				<a id="editar" href="{{=URL('vEditarPerfil')}}" >
+					{{=IMG(_src=URL('static', 'images/Edit_26x26.png')), }}
+					Editar Perfil 
+				</a>
+			</h4>
+			    <div>
+                    <div class="container-fluid col-md-2">
+                    </div>
+                    <div class=" container-fluid col-xs-6">
+                     {{=form1}}
+                    </div>
+                    <div class="container-fluid col-md-2">
+                    </div>
+                </div>
+			<!-- En esta seccion va todo el contenido de la pagina -->
+			<section class = "contenido">
+				
+				<!-- Cuando se retorne ejecute una funcion va a poner
+					 lo que esta retorne aqui -->
+				{{include}}
+
+			</section><!-- close contenido -->
+			
+		</section><!-- close main -->
+		
+		
+		<!-- Es un footer pues -->
+				<!-- Es un footer pues -->
+		<footer>
+			<nav>
+				<ul>
+					<li><a href = "#">Buscador</a></li>
+					<li> | </li>
+					<li><a href = "#">Webmail</a></li>
+					<li> | </li>
+					<li><a href = "#">Aula Virtual USB</a></li>
+					<li> | </li>
+					<li><a href = "#">Directorio USB</a></li>
+					<li> | </li>
+					<li><a href = "#">Calendario</a></li>
+					<li> | </li>
+					<!-- No se como hacer esto en web2py --^  -->
+				</ul>
+			</nav>
+		</footer>
+	</body>
+</html>
