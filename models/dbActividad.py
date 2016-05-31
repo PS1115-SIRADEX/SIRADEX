@@ -10,16 +10,16 @@ db.define_table('tipo_actividad',
                 Field('ci_usuario_propone','reference usuario')
                 )
 
-#db.define_table('actividad',
-#                Field('id_tipo','reference tipo_actividad'),
-#                Field('validacion','string', default = 'En espera' ),
-#                Field('estado','string' ),
-#                Field('evaluacion_criterio', 'text'),
-#                Field('evaluacion_valor','text'),
+db.define_table('actividad',
+                Field('id_tipo','reference tipo_actividad'),
+                Field('validacion','string', default = 'En espera' ),
+                Field('estado','string' ),
+                Field('evaluacion_criterio', 'text'),
+                Field('evaluacion_valor','text'),
 #                Field('ci_usuario_modifica', 'reference usuario'),
 #                Field('ci_usuario_elimina', 'reference usuario'),
-#                Field('ci_usuario_crea', 'reference usuario')
-#                )
+                Field('ci_usuario_crea', 'reference usuario')
+                )
 
 db.define_table('campo',
                 Field('obligatorio','boolean'),

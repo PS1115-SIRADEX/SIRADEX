@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{include 'layout.html'}}
+{{extend 'layout.html'}}
 <html>
 	<head>
 		<meta charset = "UTF-8">
@@ -26,11 +26,11 @@
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
 			<h1> 
-				<div id ="titulo"> Bienvenidos a SIRADEX </div>
+				<div id ="titulo"> {{block titulo}}{{end}} </div>
 			</h1>
 			<!-- En esta seccion va todo el contenido de la pagina -->
 			<section class = "contenido">
-				
+                {{block contenido}}{{end}}
 				<!-- Cuando se retorne ejecute una funcion va a poner
 					 lo que esta retorne aqui -->
 

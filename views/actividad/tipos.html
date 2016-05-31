@@ -1,7 +1,9 @@
-{{extend 'layout.html'}}
-<h2>TIPO ACTIVIDADES</h2>
+{{extend 'default/index.html'}}
 
 
+{{block titulo}}Tipo Actividades{{end}}
+
+{{block contenido}}
 <table class="table">
     {{ for x in rows: }}
     <tr>
@@ -13,3 +15,4 @@
     {{ pass }}
 
 </table>
+{{end}}
