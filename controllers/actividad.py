@@ -3,7 +3,7 @@
 def tipos(): 
     #sql = "SELECT TIPO_ACTIVIDAD.nombre, CAMPO.nombre "
     #sql = sql + "FROM TIPO_ACTIVIDAD inner join CAMPO on TIPO_ACTIVIDAD.id = CAMPO.id_tipo_actividad;"
-    rows = db(db.TIPO_ACTIVIDAD).select()
+    rows = db(db.tipo_actividad).select()
     #rows = db.executesql(sql)
     return locals()
 
