@@ -1,0 +1,22 @@
+{{extend 'default/index.html'}}
+
+
+{{block titulo}}Actividades{{end}}
+
+{{block contenido}}
+<a href ="{{=URL('tipos')}}"> Agregar Actividad<br></a>
+<h3>Actividades registradas en el sistema</h3>
+<table class="table">
+    <tr>
+    {{
+    if len(rows) == 0:}}
+    No hay actividad que mostrar
+    {{else:}}
+     {{for x in rows:}}
+        <td> {{=x.ci_usuario_crea}} </a></td>
+     {{pass}}
+     {{pass}}
+    </tr>
+
+</table>
+{{end}}
