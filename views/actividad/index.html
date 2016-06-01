@@ -1,12 +1,11 @@
 {{extend 'default/index.html'}}
 
 
-{{block titulo}}Tipo de Actividades{{end}}
+{{block titulo}}Actividades{{end}}
 
 {{block contenido}}
-<h3>Registro de Actividad</h3>
-<br>
-<h4>Seleccione el Tipo de Actividad que desea agregar.</h4>
+<a href ="{{=URL('tipos')}}"> Agregar Actividad<br></a>
+<h3>Actividades registradas en el sistema</h3>
 <table class="table">
     <tr>
     {{
@@ -14,7 +13,7 @@
     No hay actividad que mostrar
     {{else:}}
      {{for x in rows:}}
-        <td><a href="{{=URL('agregar',args=x.id)}}"> {{=x.nombre}} </a></td>
+        <td> {{=x.ci_usuario_crea}} </a></td>
      {{pass}}
      {{pass}}
     </tr>

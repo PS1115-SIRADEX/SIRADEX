@@ -1,8 +1,14 @@
 # coding: utf8
 # try something like
 
+def index(): 
+    #sql = "SELECT TIPO_ACTIVIDAD.nombre, CAMPO.nombre "
+    #sql = sql + "FROM TIPO_ACTIVIDAD inner join CAMPO on TIPO_ACTIVIDAD.id = CAMPO.id_tipo_actividad;"
+    rows = db(db.actividad).select()
+    #rows = db.executesql(sql)
+    return locals()
 
-def tipos():
+def tipos(): 
     #sql = "SELECT TIPO_ACTIVIDAD.nombre, CAMPO.nombre "
     #sql = sql + "FROM TIPO_ACTIVIDAD inner join CAMPO on TIPO_ACTIVIDAD.id = CAMPO.id_tipo_actividad;"
     rows = db(db.tipo_actividad).select()
