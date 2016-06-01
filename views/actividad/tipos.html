@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<h2>TIPO ACTIVIDADES</h2>
+
+
+<table class="table">
+    {{ for x in rows: }}
+    <tr>
+
+            <td><a href="{{=URL('agregar',args=x.id)}}"> {{=x.nombre}} </a></td>
+
+    </tr>
+
+    {{ pass }}
+
+</table>
