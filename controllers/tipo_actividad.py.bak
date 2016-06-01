@@ -1,0 +1,157 @@
+# -*- coding: utf-8 -*-
+
+
+def gestionar():
+    ids = db(db.TIPO_ACTIVIDAD.id_tipo != None).select(db.TIPO_ACTIVIDAD.id_tipo)
+    nombres = db(db.TIPO_ACTIVIDAD.id_tipo != None).select(db.TIPO_ACTIVIDAD.nombre)
+    descripcion = db(db.TIPO_ACTIVIDAD.id_tipo != None).select(db.TIPO_ACTIVIDAD.descripcion)
+    programas = db(db.TIPO_ACTIVIDAD.id_tipo != None).select(db.TIPO_ACTIVIDAD.programa)
+    
+    if(session.message not in ['Tipo Eliminado', 'Tipo agregado exitosamente']):
+        session.message = ''
+    
+    return dict(ids=ids,nombres=nombres,descripcion=descripcion, programas = programas)
+
+
+def agregar_tipo():
+    '''form1 = SQLFORM.factory(
+    Field('Nombre', type = 'string', requires = IS_NOT_EMPTY()),
+    Field('Descripcion', type = 'string', widget=SQLFORM.widgets.text.widget, requires = IS_NOT_EMPTY()),
+    Field('Producto', type = 'radio', widget=SQLFORM.widgets.radio.widget, requires=IS_IN_SET(['P', 'R']) ),
+    Field('Programa', requires=IS_IN_SET(['Programa1', 'Programa2', 'Programa3'])),
+    Field('Hecho',  widget=SQLFORM.widgets.checkboxes.widget,
+          requires=IS_IN_SET(['Empleados', 'Estudiantes', 'Profesores', 'Obreros']))
+    )
+    '''
+    
+    #db.TIPO_ACTIVIDAD.nombre.widget = lambda field,value:     SQLFORM.widgets.string.widget(field,value,_style='color:blue')
+    db.TIPO_ACTIVIDAD.nombre.widget = SQLFORM.widgets.string.widget
+    db.TIPO_ACTIVIDAD.tipo_p_r.widget = SQLFORM.widgets.radio.widget
+    db.TIPO_ACTIVIDAD.descripcion.widget = SQLFORM.widgets.text.widget
+    db.TIPO_ACTIVIDAD.programa.widget = SQLFORM.widgets.text.widget
+    db.TIPO_ACTIVIDAD.producto.widget = SQLFORM.widgets.text.widget
+    db.TIPO_ACTIVIDAD.nro_campos.widget = SQLFORM.widgets.integer.widget
+    formulario = SQLFORM(db.TIPO_ACTIVIDAD,
+                         buttons=['submit'],
+                         fields=[
+                                 'nombre','tipo_p_r','descripcion','programa','producto'
+                                ],
+                         formatstyle="divs",
+                         submit_button='Registrar Tipo Actividad'
+                        )
+  
+
+    if formulario.accepts(request.vars, session):
+        session.form_nombre = request.vars.nombre
+        redirect(URL('agregar_tipo_campos.html'))
+    elif formulario.errors:
+        session.message = 'Error en el formulario'
+    else:
+        session.message = ''
+        
+    return dict(formulario=formulario)
+
+def agregar_tipo_campos():
+    nombre_tipo = session.form_nombre
+    print(nombre_tipo)
+    
+    campos_guardados = None
+    query = reduce(lambda a, b: (a&b),[db.TIPO_ACTIVIDAD.nombre == nombre_tipo,
+                                      db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act,
+                                      db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo])
+    campos_guardados = db(query).select(db.CAMPO.ALL, db.ACT_POSEE_CAMPO.ALL)
+    #query = reduce(lambda a,b:(a&b),queries)
+    #db(query).select()
+    """campos_guardados = db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo and
+                          db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act and
+                          db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo).select(db.CAMPO.ALL, db.ACT_POSEE_CAMPO.ALL)"""
+    
+    id_tipo = db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo).select(db.TIPO_ACTIVIDAD.id_tipo)[0].id_tipo
+    
+    form = SQLFORM(db.CAMPO,
+                   submit_button='Agregar',
+                   fields = ['nombre', 'lista', 'obligatorio'],
+                   labels = {'lista' : 'Tipo'}
+                   )
+    
+    if form.accepts(request.vars, session):
+        # Campo aceptado, insertar en db
+        idd_campo = db(db.CAMPO.nombre == request.vars.nombre).select(db.CAMPO.id_campo)[0].id_campo
+        db.ACT_POSEE_CAMPO.insert(id_tipo_act = id_tipo, id_campo = idd_campo)
+        redirect(URL('agregar_tipo_campos.html'))
+        
+    elif form.errors:
+        session.message = 'Datos invalidos'
+    else:
+        session.message = ''
+    
+    return dict(form = form, campos = campos_guardados)
+
+def agregar_tipo_aux():
+    session.message = 'Tipo agregado exitosamente'
+    redirect(URL('gestionar.html'))
+        
+def eliminar_campos():
+    nombre_tipo = session.form_nombre
+    
+    query = reduce(lambda a, b: (a&b),[db.TIPO_ACTIVIDAD.nombre == nombre_tipo,
+                                      db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act,
+                                      db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo])
+    aux = db(query).select(db.ACT_POSEE_CAMPO.ALL)
+    """aux = db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo and
+       db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act and
+       db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo).select(db.ACT_POSEE_CAMPO.ALL)"""
+    
+    if(len(aux) > 0):
+        db(db.ACT_POSEE_CAMPO.id_tipo_act == aux[0].id_tipo_act).delete()
+    
+    for row in aux:
+        db(db.CAMPO.id_campo == row.id_campo).delete()
+    
+    if(len(aux) > 0):
+        db(db.TIPO_ACTIVIDAD.id_tipo == aux[0].id_tipo_act).delete()
+    
+    redirect(URL('gestionar.html'))
+
+def eliminar_tipo():
+    print(request.env.request_method)
+    form = FORM('Nombre del Tipo Actividad:', INPUT(_name='nombre', _class = 'field'), INPUT(_type='submit', _value ='Elimiar'))
+    
+    if form.accepts(request.vars, session):
+        if (db(db.TIPO_ACTIVIDAD.nombre == request.vars.nombre).count() == 1):
+            nombre_tipo = request.vars.nombre
+            
+            query = reduce(lambda a, b: (a&b),[db.TIPO_ACTIVIDAD.nombre == nombre_tipo,
+                                      db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act,
+                                      db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo])
+            """aux = db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo and
+               db.TIPO_ACTIVIDAD.id_tipo == db.ACT_POSEE_CAMPO.id_tipo_act and
+               db.ACT_POSEE_CAMPO.id_campo == db.CAMPO.id_campo).select(db.ACT_POSEE_CAMPO.ALL)"""
+            aux = db(query).select(db.ACT_POSEE_CAMPO.ALL)
+            
+            if(len(aux) > 0):
+                db(db.ACT_POSEE_CAMPO.id_tipo_act == aux[0].id_tipo_act).delete()
+
+            for row in aux:
+                db(db.CAMPO.id_campo == row.id_campo).delete()
+                
+            if(len(aux) > 0):
+                db(db.TIPO_ACTIVIDAD.id_tipo == aux[0].id_tipo_act).delete()
+            
+            #db(db.TIPO_ACTIVIDAD.nombre == request.vars.nombre).delete()
+            session.message = 'Tipo Eliminado'
+            redirect(URL('gestionar.html'))
+        else:
+            session.message = 'No se encontro un tipo con ese nombre'
+            
+    elif form.errors:
+        session.message = 'Error en el formulario'
+    else:
+        session.message = ''
+        
+    return dict(form = form)
+
+
+def guardar_archivos():
+    
+    return True;

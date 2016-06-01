@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+
+
+def gestionar():
+    return response.render()
+    
+
+
+def agregar_tipo():
+    form1 = SQLFORM.factory(
+        Field('Nombre', type = 'string', requires = IS_NOT_EMPTY()),
+        Field('Descripcion', type = 'string', widget=SQLFORM.widgets.text.widget, requires = IS_NOT_EMPTY()),
+        Field('Producto', type = 'radio', widget=SQLFORM.widgets.radio.widget, requires=IS_IN_SET(['P', 'R']) ),
+        Field('Programa', requires=IS_IN_SET(['Programa1', 'Programa2', 'Programa3'])),
+        Field('Hecho',  widget=SQLFORM.widgets.checkboxes.widget, requires=IS_IN_SET(['Empleados', 'Estudiantes', 'Profesores', 'Obreros']))
+        )
+    formulario = SQLFORM.factory(db.TIPO_ACTIVIDAD.nombres)
+    if form1.accepts(request.vars, session):
+        response.flash = 'form accepted'
+    elif form1.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form = form1,formulario=formulario)
