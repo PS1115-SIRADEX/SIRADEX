@@ -36,8 +36,8 @@ db.define_table('tiene_campo',
 db.define_table('act_posee_campo',
                 Field('id_tipo_act','integer','reference tipo_actividad'),
                 Field('id_campo' ,'reference campo')
+                Field('ci_usuario_propone','reference usuario')
                 )
-
 
 db.define_table('client',
      Field('name'))
