@@ -1,5 +1,7 @@
 # coding: utf8
 # try something like
+
+
 def tipos():
     #sql = "SELECT TIPO_ACTIVIDAD.nombre, CAMPO.nombre "
     #sql = sql + "FROM TIPO_ACTIVIDAD inner join CAMPO on TIPO_ACTIVIDAD.id = CAMPO.id_tipo_actividad;"
@@ -8,17 +10,31 @@ def tipos():
     return locals()
 
 def agregar():
-    id_tipo = int(request.args(0))
-
-    rows = db(db.act_posee_campo.id_tipo_act == id_tipo).select()
+    tipo = int(request.args(0))
+    rows = db(db.act_posee_campo.id_tipo_act == tipo).select()
     fields = []
     for row in rows:
-        print(row.id_campo)
+        #print(row.id_campo)
         nombre = db(db.campo.id == row.id_campo).select().first().nombre
-        fields.append(nombre)
+        nombre = nombre.replace(" ", "_")
 
-    form = FORM(Field)
-    print(fields)
+        fields.append(Field(nombre,'string'))
+        #fields.append(Field(nombre,requires=IS_NOT_EMPTY()))
+
+    form=SQLFORM.factory(*fields)
+    if form.process().accepted:
+        id_act = db.actividad.insert(id_tipo = tipo)
+        print(id_act)
+        for var in form.vars:
+            print(var)
+            campo = var.replace("_"," ")
+            id_cam = db(db.campo.nombre==campo).select().first().id
+            print(id_cam)
+            valor = getattr(form.vars ,var)
+            db.tiene_campo.insert(id_actividad=id_act,id_campo=id_cam,valor_campo= valor)
+            #print()
+
+
     return locals()
 
 def register():
@@ -31,8 +47,7 @@ def register():
     return dict(form=form)
 
 def procesar():
-    a = reques.args()
-    print(a)
+    pass
 
 '''
 row=db((db.people.name==request.args(0))& 

@@ -16,10 +16,10 @@ db.define_table('actividad',
                 Field('validacion','string', default = 'En espera'),
                 Field('estado','string' ),
                 Field('evaluacion_criterio', 'text'),
-                Field('evaluacion_valor','text'),
+                Field('evaluacion_valor','text')
                 #Field('ci_usuario_modifica','reference usuario'),
                 #Field('ci_usuario_elimina','reference usuario'),
-                Field('ci_usuario_crea','reference usuario')
+                #Field('ci_usuario_crea','reference usuario')
                 )
 
 db.define_table('campo',
@@ -28,9 +28,10 @@ db.define_table('campo',
                 )
 
 db.define_table('tiene_campo',
-                Field('id_actividad','integer','reference actividad'),
+                Field('id_actividad','reference actividad'),
                 Field('id_campo','reference campo'),
-                Field('valor_campo','string')
+                Field('valor_campo','string'),
+                fake_migrate=True
                 )
 
 db.define_table('act_posee_campo',
