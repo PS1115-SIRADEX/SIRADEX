@@ -153,6 +153,7 @@ db.define_table('usuario',
     migrate='usuario.table',
     #fake_migrate = True
     )
+
 from gluon.contrib.login_methods.cas_auth import CasAuth
 auth.define_tables(username=True)
 auth.settings.login_form=CasAuth(
