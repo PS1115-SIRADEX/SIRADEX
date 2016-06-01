@@ -1,0 +1,38 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+<h4>
+    Registro de un nuevo tipo de Actividad
+</h4>
+<p>
+    Los campos con el <span style="color:red">*</span> son obligatorios
+</p>
+<article>
+    {{=formulario.custom.begin}}
+    <p>
+        Nombre del tipo de actividad <span style="color:red">*</span>:
+    </p>
+     {{=formulario.custom.widget.nombre}}
+    <br/>
+    <p>
+        Descripción <span style="color:red">*</span>:
+    </p>
+     {{=formulario.custom.widget.descripcion}}
+    <br/>
+    <p>
+        Tipo de Producto <span style="color:red">*</span>:
+    </p>
+    {{=formulario.custom.widget}}
+    <br/>
+    <p>
+        Programa <span style="color:red">*</span>
+    </p>
+     {{=formulario.custom.widget.producto}}
+    <br/>
+    <p>
+        Realizado por <span style="color:red">*</span>: 
+       
+    </p>
+     {{=formulario.custom.widget.nombre}}
+    <br/>
+    {{=formulario.custom.submit}}
+</article>
+    {{=formulario.custom.end}}

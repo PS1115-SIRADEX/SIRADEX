@@ -1,0 +1,10 @@
+{{session.campos.append("%s %s" % (response.vars.nombre, response.vars.tipo))}}
+{{if (session.campos): }}
+    {{for campo in session.campos:}}
+        {{ = campo }}
+        <br/>
+    {{pass}}
+{{pass}}
+{{}}
+
+{{# = campos }}

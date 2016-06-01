@@ -1,0 +1,15 @@
+<link href="{{=URL('static', 'css/camposFormStyle.css')}}" rel="stylesheet" type="text/css" />
+{{# = form }}
+<form enctype="multipart/form-data"
+      action="{{=URL()}}" method="post">
+Nombre:
+<input name="name" />
+Tipo:
+<input name="name" />
+Obligatoria:
+<input name="name" type = "checkbox" />
+Catalogo:
+<input name="name" />
+<input type="submit" />
+</form>
+{{ = A('Agregar', _href = URL('tipo_actividad', 'campos_agregados'), cid = 'campos') }}

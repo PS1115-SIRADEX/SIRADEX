@@ -1,0 +1,56 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+
+<head>
+    {{response.files.append(URL('static','css/agregarTipo.css')) }}
+    <link href="{{=URL('static', 'css/agregarTipo.css')}}" rel="stylesheet" type="text/css" />
+</head>
+<article>
+    <div class = "session_message">
+        {{= session.message or ''}}
+    </div>
+    
+    <h4>
+        Gestión de Tipos de Actividad
+    </h4>
+    <p>
+        <a href="{{=URL(a='GestTipoActividad', c='tipo_actividad', f='agregar_tipo.html')}}">
+            {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')) }}
+            Agregar Tipo de Actividad
+        </a>
+    </p>
+    <p>
+        <a href="{{=URL(a='GestTipoActividad', c='tipo_actividad', f='eliminar_tipo.html')}}">
+            {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')) }}
+            Eliminar Tipo de Actividad
+        </a>
+    </p>
+    <p>
+        <a href="#">
+            {{=IMG(_src=URL('static', 'iconos/Eliminar_26x26.png')) }}
+            Papelera
+        </a>
+    </p>
+
+    
+</article>
+<div>
+    <br/>
+    <hr/>
+    <br/>
+    <table >
+        <tr>
+            <td class="ides">ID</td>
+            <td>Nombre</td>
+            <td>Descripción</td>
+            <td>Programa</td>
+        </tr>
+        {{for index, asd in enumerate(ids):}}
+            <tr>
+                <td id="ides">{{ =ids[index].id}}</td>
+                <td>{{ =nombres[index].nombre}}</td>
+                <td>{{ =descripcion[index].descripcion}}</td>
+                <td>{{ =programas[index].programa}}</td>
+            </tr>
+        {{pass}}
+    </table>
+</div>

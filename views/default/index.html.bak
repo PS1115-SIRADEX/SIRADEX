@@ -4,5 +4,5 @@
     <link href="{{=URL('static', 'css/agregarTipo.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <h1 id="banner_h1">
-    <strong>Bienvenidos al SiRaDEX</strong>
+    <strong>Bienvenidos AL SiRaDEX</strong>
 </h1>

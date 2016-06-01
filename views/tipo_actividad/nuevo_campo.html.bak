@@ -1,0 +1,12 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+
+{{ = form.custom.begin}}
+
+<p>Nombre: {{ = form.custom.widget.nombre }}</p><br/>
+<p>Tipo: {{ = form.custom.widget.lista }}</p><br/>
+<p>Obligatorio: {{ = form.custom.widget.obligatorio }}</p><br/>
+<p>Catalogo: {{ = form.custom.widget.despliega_cat }}</p><br/>
+
+    <a  href="{{=URL(c='tipo_actividad', f='agregar_tipo_campos.html')}}">
+        <button>Agregar</button>
+    </a>

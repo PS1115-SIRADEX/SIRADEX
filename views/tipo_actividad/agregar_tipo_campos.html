@@ -1,0 +1,34 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+<link href="{{=URL('static', 'css/camposFormStyle.css')}}" rel="stylesheet" type="text/css" />
+<div class = "session_message">
+    {{ = session.message or ''}}
+</div>
+Agregue la cantidad de campos que desee
+<br/>
+<br/>
+<div id = 'campos' >
+    <table id="tit"><th>Campos</th></table>
+    <table>
+        <tr>
+            <td>Nombre</td>
+            <td>Tipo</td>
+            <td>Oblgitorio</td>
+        </tr>
+        {{for campo in campos:}}
+            <tr>
+                <td>{{=campo.CAMPO.nombre}}</td>
+                <td>{{=campo.CAMPO.lista}}</td>
+                <td>{{=campo.CAMPO.obligatorio}}</td>
+            </tr>
+        {{pass}}
+    </table>
+</div>
+<br/>
+<div id = 'formulario'>
+    {{ =form }}
+</div>
+<br/><br/><br/>
+<div id="buttons">
+    <input type=button onClick="parent.location='{{=URL('tipo_actividad', 'agregar_tipo_aux')}}'" value='Finalizar'>
+    <input type=button onClick="parent.location='{{=URL('tipo_actividad', 'eliminar_campos') }}'" value='Abortar'>
+</div>

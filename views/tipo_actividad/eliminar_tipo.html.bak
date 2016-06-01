@@ -1,0 +1,10 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+{{response.files.append(URL('static','css/eliminarTipo.css'))}}
+
+<div class = "session_message">
+    {{ = session.message or ''}}
+</div>
+
+<div class = "form">
+    {{ = form}}
+</div>
