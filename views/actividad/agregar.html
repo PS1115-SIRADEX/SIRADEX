@@ -1,6 +1,21 @@
-{{extend 'default/index.html'}}
+{{extend 'layout.html'}}
+<h2>TIPO ACTIVIDADES</h2>
+<div>
+<form action="procesar" method="post" >
+    <table>
+    {{for i in range(len(fields)):}}
+        <tr>
+            <td>{{=fields[i]}}:  </td>
+            <td><input type='text' name = '{{=fields[i]}}'/></td>
+            <td></td>
+        </tr>
+    {{pass}}
+        <tr>
+            <td></td>
+            <input value = "Submit" type='submit'/>
+            <td></td>
+        </tr>
 
-{{block titulo}}Tipo Actividades{{end}}
-{{block contenido}}
-{{=tipo}}
-{{end}}
+    </table>
+</form>
+</div>

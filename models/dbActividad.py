@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 db.define_table('tipo_actividad',
                 Field('nombre','text',notnull = True),
                 Field('tipo_p_r','string',notnull = True),
@@ -23,14 +24,18 @@ db.define_table('actividad',
 
 db.define_table('campo',
                 Field('obligatorio','boolean'),
-                Field('nombre', 'string'),
-                Field('id_tipo_actividad', 'reference tipo_actividad')
+                Field('nombre', 'string')
                 )
 
-db.define_table('valor_campo',
-                Field('id_campo','reference campo '),
-                Field('id_tipo','reference tipo_actividad '),
-                Field('valor','string',notnull = True)
+db.define_table('tiene_campo',
+                Field('id_actividad','integer','reference actividad'),
+                Field('id_campo','reference campo'),
+                Field('valor_campo','string')
+                )
+
+db.define_table('act_posee_campo',
+                Field('id_tipo_act','integer','reference tipo_actividad'),
+                Field('id_campo' ,'reference campo')
                 )
 
 db.define_table('client',
