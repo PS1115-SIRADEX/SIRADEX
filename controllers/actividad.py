@@ -23,7 +23,6 @@ def agregar():
         #fields.append(Field(nombre,requires=IS_NOT_EMPTY()))
 
     form=SQLFORM.factory(*fields)
-    form.vars.edad = "masculino"
     if form.process().accepted:
         id_act = db.actividad.insert(id_tipo = tipo)
         for var in form.vars:
@@ -64,45 +63,3 @@ def modificar():
         redirect(URL('index'))
 
     return locals()
-
-def register():
-    form=SQLFORM.factory(db.client,db.address)
-    if form.process().accepted:
-        id = db.client.insert(**db.client._filter_fields(form.vars))
-        form.vars.client=id
-        id = db.address.insert(**db.address._filter_fields(form.vars))
-        response.flash='Thanks for filling the form'
-    return dict(form=form)
-
-def procesar():
-    pass
-
-'''
-row=db((db.people.name==request.args(0))& 
-               (db.people.company_id==db.company.id)).select().first()
-people_name=row.people.name
-company_name=row.company.name
-
-people_and_their_companies=db(db.people.company_id==db.company.id)
-row=people_and_their_companies(db.people.name==request.args (0)).select().first()
-
-SQLFORM(table, record=None,
-       deletable=False,
-       linkto=None,
-       upload=None,
-       fields=None,
-       labels=None,
-       col3={}, submit_button='Submit',
-       delete_label='Check to delete:',
-       showid=True,
-       readonly=False,
-       comments=True,
-       keepopts=[],
-       ignore_rw=False,
-       record_id=None,
-       formstyle='table3cols',
-       buttons=['submit'],
-       separator=': ',
-       **attributes)
-fields = ['name']
-'''
