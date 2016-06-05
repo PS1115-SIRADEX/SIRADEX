@@ -4,19 +4,129 @@
 {{block titulo}}Actividades{{end}}
 
 {{block contenido}}
-<a href ="{{=URL('tipos')}}"> Agregar Actividad<br></a>
+<a href ="{{=URL('tipos')}}"> 
+    {{=IMG(_src=URL('static', 'images/i_add.png'),_height='25'), }}
+</a>Agregar Actividad
+<br>
 <h3>Actividades registradas en el sistema</h3>
-<table class="table">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Participantes</th>
+            <th>Tipo Acticidad</th>
+            <th id="DetallesTl">Detalles</th>
+            <th>Creacion</th>
+            <th>Modificacion</th>
+            <th>Valid</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        
     <tr>
-    {{
-    if len(rows) == 0:}}
+    {{if len(rows) == 0:}}
     No hay actividad que mostrar
     {{else:}}
      {{for x in rows:}}
-        <td> {{=x.ci_usuario_crea}} </a></td>
+        <td> {{=x.ci_usuario_crea}}</td>
+        <td> {{=x.id_tipo}}</td>
+        <td id="Detalles">
+            
+            <div class="item">
+            Text goes in here.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et nobis officia non quam, repellendus animi nulla. At quod quia qui facilis soluta perspiciatis laboriosam temporibus nesciunt. Voluptatem accusantium ex nam.
+            </div>
+        </td>
+        <td> FECHA CREACION</td>
+        <td> Modificacion</td>
+        <td> {{if x.validacion == "En espera":}}
+                {{=IMG(_src=URL('static', 'images/i_clock.png'),
+                _height='50',
+                _title="En Espera") }}
+            
+            {{elif x.validacion == "Aceptado":}}
+                {{=IMG(_src=URL('static', 'images/i_check.png'),
+                _height='50',
+                _title="Aceptado") }}
+            
+            {{elif x.validacion == "Rechazado":}}
+                {{=IMG(_src=URL('static', 'images/i_ex.png'),
+                _height='50',
+                _title="Rechazado") }}
+            
+            {{pass}}
+                
+        </td>
+        <td> 
+        <!-- Boton Modificar -->
+            <a href="{{=URL('modificar',args=x.id)}}">
+                {{=IMG(_src=URL('static', 'images/i_edit.png'),
+                _height='25',
+                _title="Modificar") }}
+            </a>
+        </td>
+        <!-- Boton Descargar -->
+        <td> 
+            {{=IMG(_src=URL('static', 'images/i_download.png'),
+            _height='25',
+            _title="Descargar") }}
+        </td>
+        <!-- Boton Eliminar -->
+        <td> 
+            {{=IMG(_src=URL('static', 'images/i_delete.png'),
+            _height='25',
+            _title="Eliminar") }}
+        </td>
+     </tr>
      {{pass}}
      {{pass}}
-    </tr>
 
+    </tbody>
 </table>
+{{end}}
+
+{{block script}}
+<script>
+
+$(function(){ /* to make sure the script runs after page load */
+
+    $('.item').each(function(event){ /* select all divs with the item class */
+    
+        var max_length = 150; /* set the max content length before a read more link will be added */
+
+        if($(this).html().length > max_length){ /* check for content length */
+    
+            var short_content   = $(this).html().substr(0,max_length); /* split the content in two parts */
+            var long_content    = $(this).html().substr(max_length);
+            
+            $(this).html(short_content+' (...)'+
+                         '<a href="#" class="read_more"><br/>Mas detalles</a>'+
+                         '<span class="more_text" style="display:none;">'+long_content+'</span>'+
+                         '<a href="#" class="read_less" style="display:none;"><br/>Ocultar</a>'); /* Alter the html to allow the read more functionality */
+
+                         
+            $(this).find('a.read_more').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
+                event.preventDefault(); /* prevent the a from changing the url */
+                $(this).hide(); /* hide the read more button */
+                $(this).parents('.item').find('.more_text').show(); /* show the .more_text span */
+                $(this).parents('.item').find('.read_less').show(); /* show the .more_text span */
+         
+            });
+
+            $(this).find('a.read_less').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
+                extended = true;
+                event.preventDefault(); /* prevent the a from changing the url */
+                $(this).hide(); /* hide the read more button */
+                $(this).parents('.item').find('.more_text').hide(); /* show the .more_text span */
+                $(this).parents('.item').find('.read_more').show(); /* show the .more_text span */
+         
+            });
+        }
+
+
+        
+    });
+})
+</script>
+
 {{end}}
