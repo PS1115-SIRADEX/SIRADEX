@@ -28,9 +28,9 @@ db.define_table('campo',
                 )
 
 db.define_table('tiene_campo',
-                Field('id_actividad','integer','reference actividad'),
+                Field('id_actividad','reference actividad'),
                 Field('id_campo','reference campo'),
-                Field('valor_campo','string')
+                Field('valor_campo','string'),
                 )
 
 db.define_table('act_posee_campo',
