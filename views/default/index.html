@@ -8,6 +8,7 @@
 		<link href="{{=URL('static', 'css/logIn.css')}}" rel="stylesheet" type="text/css" />
 		<title> SIRADEX </title>
 		
+		{{block script}} {{end}}
 	</head>
 
 	<body>
@@ -29,12 +30,13 @@
 				<div id ="titulo"> {{block titulo}}{{end}} </div>
 			</h1>
 			<!-- En esta seccion va todo el contenido de la pagina -->
-			<section class = "contenido">
-                {{block contenido}}{{end}}
+                {{block contenido}}
+			<section>
+			</section><!-- close contenido -->
+                {{end}}
 				<!-- Cuando se retorne ejecute una funcion va a poner
 					 lo que esta retorne aqui -->
 
-			</section><!-- close contenido -->
 			
 		</section><!-- close main -->
 		
