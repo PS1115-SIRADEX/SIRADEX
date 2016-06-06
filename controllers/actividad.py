@@ -15,6 +15,7 @@ def tipos():
 def agregar():
     tipo = int(request.args(0))
     rows = db(db.act_posee_campo.id_tipo_act == tipo).select()
+    nombre_tipo = db(db.tipo_actividad.id == tipo).select().first().nombre
     fields = []
     for row in rows:
         nombre = db(db.campo.id == row.id_campo).select().first().nombre

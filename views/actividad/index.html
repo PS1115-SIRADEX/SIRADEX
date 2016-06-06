@@ -1,7 +1,7 @@
 {{extend 'default/index.html'}}
 
 
-{{block titulo}}Actividades{{end}}
+{{block titulo}}Gestion de Actividades{{end}}
 
 {{block contenido}}
 <a href ="{{=URL('tipos')}}"> 
@@ -14,7 +14,7 @@
         <tr>
             <th>Participantes</th>
             <th>Tipo Acticidad</th>
-            <th id="DetallesTl">Detalles</th>
+            <th>Detalles</th>
             <th>Creacion</th>
             <th>Modificacion</th>
             <th>Valid</th>
@@ -30,15 +30,13 @@
      {{for x in rows:}}
         <td> {{=x.ci_usuario_crea}}</td>
         <td> {{=x.id_tipo}}</td>
-        <td id="Detalles">
-            
-            <div class="item">
-            Text goes in here.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et nobis officia non quam, repellendus animi nulla. At quod quia qui facilis soluta perspiciatis laboriosam temporibus nesciunt. Voluptatem accusantium ex nam.
+        <td>  
+            <div class="detalles">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi a in possimus odio, eveniet accusamus neque, fuga vel culpa distinctio at aspernatur esse, optio qui aliquid error sapiente cupiditate quos!
             </div>
         </td>
-        <td> FECHA CREACION</td>
-        <td> Modificacion</td>
+        <td> 00/Ene/0000</td>
+        <td> <!-- Modificacion --></td>
         <td> {{if x.validacion == "En espera":}}
                 {{=IMG(_src=URL('static', 'images/i_clock.png'),
                 _height='50',
@@ -60,7 +58,7 @@
         <td> 
         <!-- Boton Modificar -->
             <a href="{{=URL('modificar',args=x.id)}}">
-                {{=IMG(_src=URL('static', 'images/i_edit.png'),
+                {{=IMG(_src=URL('static', 'images/i_edit1.png'),
                 _height='25',
                 _title="Modificar") }}
             </a>
@@ -73,7 +71,7 @@
         </td>
         <!-- Boton Eliminar -->
         <td> 
-            {{=IMG(_src=URL('static', 'images/i_delete.png'),
+            {{=IMG(_src=URL('static', 'images/i_delete1.png'),
             _height='25',
             _title="Eliminar") }}
         </td>
@@ -86,39 +84,40 @@
 {{end}}
 
 {{block script}}
+<!-- SCRIPT PARA MOSTRAR Y OCULTAR DETALLES -->
+
 <script>
 
-$(function(){ /* to make sure the script runs after page load */
-
-    $('.item').each(function(event){ /* select all divs with the item class */
+$(function(){
+    $('.detalles').each(function(event){ /* selecciona los div con la clase .detalles*/
     
-        var max_length = 150; /* set the max content length before a read more link will be added */
+        var largo_max = 150; /* indica cuantos caracteres apareceran antes de que aparezca "Mas detalles" */
 
-        if($(this).html().length > max_length){ /* check for content length */
-    
-            var short_content   = $(this).html().substr(0,max_length); /* split the content in two parts */
-            var long_content    = $(this).html().substr(max_length);
+        if($(this).html().length > largo_max){
+            var contenido_corto   = $(this).html().substr(0,largo_max); /* Divide el contenido en dos partes */
+            var contenido_largo    = $(this).html().substr(largo_max);
             
-            $(this).html(short_content+' (...)'+
-                         '<a href="#" class="read_more"><br/>Mas detalles</a>'+
-                         '<span class="more_text" style="display:none;">'+long_content+'</span>'+
-                         '<a href="#" class="read_less" style="display:none;"><br/>Ocultar</a>'); /* Alter the html to allow the read more functionality */
+            $(this).html(contenido_corto+' <span class="ocultar">(...)</span>'+
+                         '<a href="#" class="leer_mas"><br/>Mas detalles</a>'+
+                         '<span class="mas_texto" style="display:none;">'+contenido_largo+'</span>'+
+                         '<a href="#" class="leer_menos" style="display:none;"><br/>Menos detalles</a>'); /* Nueva forma del contenido, para usar la funcionalidad */
 
                          
-            $(this).find('a.read_more').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
-                event.preventDefault(); /* prevent the a from changing the url */
-                $(this).hide(); /* hide the read more button */
-                $(this).parents('.item').find('.more_text').show(); /* show the .more_text span */
-                $(this).parents('.item').find('.read_less').show(); /* show the .more_text span */
+            $(this).find('a.leer_mas').click(function(event){
+                event.preventDefault();
+                $(this).hide(); /* esconde "Mas detalles" */
+                $(this).parents('.detalles').find('.ocultar').hide(); /* esconde los puntos suspensivos */
+                $(this).parents('.detalles').find('.mas_texto').show(); /* muestra el resto del texto */
+                $(this).parents('.detalles').find('.leer_menos').show(); /* muestra "Menos detalles" */
          
             });
 
-            $(this).find('a.read_less').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
-                extended = true;
-                event.preventDefault(); /* prevent the a from changing the url */
-                $(this).hide(); /* hide the read more button */
-                $(this).parents('.item').find('.more_text').hide(); /* show the .more_text span */
-                $(this).parents('.item').find('.read_more').show(); /* show the .more_text span */
+            $(this).find('a.leer_menos').click(function(event){
+                event.preventDefault(); 
+                $(this).hide(); /* esconde "Menos detalles" */
+                $(this).parents('.detalles').find('.ocultar').show(); /* muestra los puntos suspensivos */
+                $(this).parents('.detalles').find('.mas_texto').hide(); /* esconde el texto largo */
+                $(this).parents('.detalles').find('.leer_mas').show(); /* muestra "Mas detalles" */
          
             });
         }
