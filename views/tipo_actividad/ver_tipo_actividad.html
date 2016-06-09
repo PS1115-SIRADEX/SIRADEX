@@ -1,0 +1,33 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+
+<h2> Consultando el Tipo Actividad {{=tipo.nombre}}</h2>
+<br/>
+<a href="{{=URL(f='gestionar_papelera')}}">Volver</a>
+<br/>
+
+<table class="table table-bordered">
+    <tr> <td class="col-md-2">Nombre</td>           <td class="col-md-6">{{=tipo.nombre}}</td> </tr>
+    <tr> <td class="col-md-2">Descripcion</td>      <td class="col-md-6">{{=tipo.descripcion}}</td> </tr>
+    <tr> <td class="col-md-2">Tipo de Programa</td> <td class="col-md-6">{{=tipo.tipo_p_r}}</td> </tr>
+    <tr> <td class="col-md-2">Producto</td>         <td class="col-md-6">{{=tipo.programa}}</td> </tr>
+</table>
+<br/>
+Campos
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td class="col-md-4">Nombre</td>
+            <td class="col-md-3">Tipo</td>
+            <td class="col-md-2">Oblgitorio</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{for campo in campos:}}
+            <tr>
+                <td class="col-md-4">{{=campo.nombre}}</td>
+                <td class="col-md-3">{{=campo.lista}}</td>
+                <td class="col-md-2">{{=campo.obligatorio}}</td>
+            </tr>
+        {{pass}}
+    </tbody>
+</table>
