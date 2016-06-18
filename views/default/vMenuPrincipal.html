@@ -19,86 +19,49 @@
 			<!-- Menu del headder -->
 			<nav>
 				<ul>
+                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
+                    <span class="glyphicon glyphicon-user"></span>
+                     Cerrar Sesion
+                    </a></li>
+                    <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
 					<li><a href = "#">Contactenos</a></li>
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL('index')}}">Inicio</a></li>
+					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
+                    {{ if admin == 1: }}
+                    <li> | </li>
+					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
+					<li> | </li>
+                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
+                    {{ elif admin == 2: }}
+                    <li> | </li>
+                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
+                    {{else:}}
+                    {{pass}}
 
                      
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
-           <ul class="nav navbar-nav navbar-right">
-              {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
-           </ul>
 		</header>
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
 			<!-- Menu de navegacion lateral -->
-			<aside>
-				<ul>
-					<li id="layout_aside_gestionar">
-                        <h4> Gestionar:</h4>
-                    </li>
-					<!-- No se como hacer esto en web2py ---v  -->
-					<li id=layout_aside_tipos_de_actividad>
-                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">Tipos de Actividad</a>
-                    </li>
-					<li id="layout_aside_agregar_tipo">
-                        <a href="#">
-                            Actividades
-                        </a>
-                    </li>
-					<li id="layout_aside_validaciones">
-                        <a href="#">
-                            Validaciones
-                        </a>
-                    </li>
-					<li id="layout_aside_catalogos">
-                        <a href="#">
-                            Catalogos
-                        </a>
-                    </li>
-					<li id="layout_aside_usuarios">
-                        <a href="#">
-                        Usuarios
-                        </a>
-                    </li>
-					<li id="layout_aside_backups">
-                        <a href="#">
-                            Backups
-                        </a>
-                    </li>
-					<br/>
-					<br>
-					<li id="layout_aside_logs">
-                        <a href="#">
-                            Consultar Logs
-                        </a>
-                    </li>
-					<li id="layout_aside_cambiar_tipo_usuario">
-                        <a href="#">
-                            Entrar como otro Tipo de Usuario
-                        </a>
-                    </li>
-				</ul>
-			</aside>
-			
-			<h4>
-			    <div id="titulo"> <b> Gestion de Actividades </b> </div>
-			</h4>
 			<h4>
 			    <div id="bienvenido">  Bienvenido al SIRADEX </div>
 			</h4>
 			<a id="agregar" href="#">
-				{{=IMG(_src=URL('static', 'images/Add_26x26.png')), }}
-				Agregar Actividad
+				Gestionar Actividad
 			</a>
 			<h4>
 				<div id="mostrar"> No hay Actividad que mostrar </div>

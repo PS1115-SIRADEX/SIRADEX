@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-{{include 'layout.html'}}
+
 <html>
 	<head>
 		<meta charset = "UTF-8">
 		{{include 'web2py_ajax.html'}}
+		{{response.files.append(URL('static','css/layoutStyle.css'))}}
 		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/verPerfil.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{=URL('static', 'css/layoutStyle.css')}}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<title> SIRADEX </title>
 		
 	</head>
@@ -18,9 +20,9 @@
 			</div>
 			
 			<!-- Menu del headder -->
-			<nav>
+<nav>
 				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
+                    <li><a class ='btn btn-primary btn-xs' href="{{=URL(c='default',f='logout_cas')}}">
                     <span class="glyphicon glyphicon-user"></span>
                      Cerrar Sesion
                     </a></li>
@@ -31,23 +33,25 @@
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
+					<li><a href = "{{=URL(c='default',f='vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
+					<li><a href = "{{=URL(c='default',f='vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
                     <li> | </li>
-					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
+					<li><a href = "{{=URL(c='default',f='vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
+                    <li><a href = "{{=URL(c='default',f='vMenuDex')}}">DEX</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
+					<li><a href = "{{=URL(c='default',f='vMenuPrincipal')}}">Usuario</a></li>
                     {{ elif admin == 2: }}
                     <li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
+                    <li><a href = "{{=URL(c='default',f='vMenuDex')}}">DEX</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
+					<li><a href = "{{=URL(c='default',f='vMenuPrincipal')}}">Usuario</a></li>
                     {{else:}}
                     {{pass}}
+
+                     
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
@@ -55,25 +59,26 @@
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<h4> 
-				<div id ="titulo"> Mi Perfil </div>
-			</h4>
-			<br>
-			<h4>
-				<a id="editar" href="{{=URL('vEditarPerfil')}}" >
-					{{=IMG(_src=URL('static', 'images/Edit_26x26.png')), }}
-					Editar Perfil 
-				</a>
-			</h4>
-			    <div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                    <div class=" container-fluid col-xs-6">
-                     {{=form1}}
-                    </div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                </div>
+			
+			<!-- Menu de navegacion lateral -->
+			<aside>
+				<ul>
+					<li id="layout_aside_gestionar">
+                        <h4> Gestionar:</h4>
+                    </li>
+					<li id="layout_aside_validaciones">
+                        <a href="#">
+                            Validaciones
+                        </a>
+                    </li>
+                    <li id=layout_aside_tipos_de_actividad>
+                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">
+                           Tipos de Actividad
+                        </a>
+                    </li>
+				</ul>
+			</aside>
+			
 			<!-- En esta seccion va todo el contenido de la pagina -->
 			<section class = "contenido">
 				
@@ -87,8 +92,7 @@
 		
 		
 		<!-- Es un footer pues -->
-				<!-- Es un footer pues -->
-		<footer>
+        <footer>
 			<nav>
 				<ul>
 					<li><a href = "#">Buscador</a></li>
@@ -100,10 +104,10 @@
 					<li><a href = "#">Directorio USB</a></li>
 					<li> | </li>
 					<li><a href = "#">Calendario</a></li>
-					<li> | </li>
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
 		</footer>
+
 	</body>
 </html>

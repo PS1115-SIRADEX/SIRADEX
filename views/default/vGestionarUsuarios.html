@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{{include 'layout.html'}}
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        {{include 'web2py_ajax.html'}}
+        <!-- hago el link con el CSS de esta pagina -->
+        <link href="{{=URL('static', 'css/registroUsuario.css')}}" rel="stylesheet" type="text/css" />
+        <title> SIRADEX </title>
+    </head>
+
+    <body>
+        <header>
+            <!-- Banner de SIRADEX -->
+            <div id = "logo">
+                {{=IMG(_src=URL('static', 'images/banner.jpg')) }}
+            </div>
+            
+            <!-- Menu del headder -->
+			<nav>
+				<ul>
+                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
+                    <span class="glyphicon glyphicon-user"></span>
+                     Cerrar Sesion
+                    </a></li>
+                    <li> | </li>
+					<li><a href = "#">Ayuda</a></li>
+					<li> | </li>
+					<li><a href = "#">Contactenos</a></li>
+					<li> | </li>
+					<li><a href = "#">Busqueda</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
+                    <li> | </li>
+					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
+					<li> | </li>
+                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
+					<li> | </li>
+					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
+					<!-- No se como hacer esto en web2py --^  -->
+				</ul>
+			</nav>
+        </header>
+            
+        <!-- Contenido principal de la pagina -->
+        <div id = "agregar">
+            <a href = "{{=URL('vAgregarUsuario')}}">Agregar Usuario</a>
+        </div>
+        <section class = "main">
+            <h4 id = titulo> Gestionar Usuarios </h4>
+                <div id = "error">
+                    {{=message}}
+                </div>
+            <br/>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <td class="col-md-4"><b>Usbid</b></td>
+                    <td class="col-md-5"><b>Nombres</b></td>
+                    <td class="col-md-6"><b>Apellidos</b></td>
+                    <td class="col-md-7"><b>Tipo</b></td>
+                    <td class="col-md-1"> </td>
+                    <td class="col-md-1"> </td>
+                </tr>
+                </thead>
+                <tbody>
+                    {{for usuario in usuarios:}}
+                        <tr>
+                            <td class="col-md-4">
+                                {{ =usuario.usbid}}
+                            </td>
+                            <td class="col-md-5">{{ =usuario.nombres}}</td>
+                            <td class="col-md-6">{{ =usuario.apellidos}}</td>
+                            <td class="col-md-7">{{ =usuario.tipo}}</td>
+                            <td class="col-md-1">
+                                <a href = "{{=URL(f='vModificarRol', args=[ usuario.usbid ] )}}">
+                                        {{=IMG(_src=URL('static', 'images/Edit_26x26.png')), }}
+                                </a>
+                            </td>
+                            <td class="col-md-1">
+                                <a href = "{{=URL(f='vEliminarUsuario', args=[ usuario.usbid ] )}}">
+                                        {{=IMG(_src=URL('static', 'images/Eliminar_26x26.png')), }}
+                                </a>
+                            </td>
+                        </tr>
+                    {{pass}}
+                </tbody>
+            </table>
+        </section><!-- close main -->
+        
+        <!-- Es un footer pues -->
+        <footer>
+            <nav>
+                <ul>
+                    <li></li>
+                    <li><a href = "#">Buscador</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Webmail</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Aula Virtual USB</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Directorio USB</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Calendario</a></li>
+                    <li> | </li>
+                    <!-- No se como hacer esto en web2py --^  -->
+                </ul>
+            </nav>
+        </footer>
+
+    </body>
+</html>

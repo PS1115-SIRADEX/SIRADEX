@@ -1,0 +1,50 @@
+{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+
+<head>
+    {{response.files.append(URL('static','css/agregarTipo.css')) }}
+    <link href="{{=URL('static', 'css/agregarTipo.css')}}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h4> Gestionar Papelera </h4>
+
+    <div class = "session_message">
+        {{= session.message or ''}}
+        {{ session.message = '' }}
+    </div>
+    <hr/>
+    <br/>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td class="col-md-4">Nombre</td>
+            <td class="col-md-7">Descripcion</td>
+            <td class="col-md-1"> </td>
+            <td class="col-md-1"> </td>
+        </tr>
+        </thead>
+        <tbody>
+            {{for tipo in tipos_papelera:}}
+                <tr>
+                    <td class="col-md-4">
+                        <a href="{{=URL(f='ver_tipo_actividad.html', args=[tipo.id_tipo])}}">
+                            {{ =tipo.nombre}}
+                        </a>
+                    </td>
+                    <td class="col-md-7">{{ =tipo.descripcion}}</td>
+                    <td class="col-md-1">
+                        <a href = "{{=URL(f='restaurar_tipo.html', args=[ tipo.id_tipo ] )}}">
+                                {{=IMG(_src=URL('static', 'iconos/restaurar.png'))}}
+                        </a>
+                    </td>
+                    <td class="col-md-1">
+                        <a href = "{{=URL(f='eliminar_tipo_papelera.html', args=[ tipo.id_tipo ] )}}">
+                                {{=IMG(_src=URL('static', 'iconos/ex.png'))}}
+                        </a>
+                    </td>
+                </tr>
+            {{pass}}
+        </tbody>
+    </table>
+
+</body>

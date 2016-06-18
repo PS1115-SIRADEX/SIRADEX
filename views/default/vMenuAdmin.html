@@ -5,7 +5,7 @@
 		<meta charset = "UTF-8">
 		{{include 'web2py_ajax.html'}}
 		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/verPerfil.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{=URL('static', 'css/menuAdmin.css')}}" rel="stylesheet" type="text/css" />
 		<title> SIRADEX </title>
 		
 	</head>
@@ -16,15 +16,9 @@
 			<div id = "logo">
 				{{=IMG(_src=URL('static', 'images/banner.jpg')) }}
 			</div>
-			
 			<!-- Menu del headder -->
 			<nav>
 				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
-                    <span class="glyphicon glyphicon-user"></span>
-                     Cerrar Sesion
-                    </a></li>
-                    <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
 					<li><a href = "#">Contactenos</a></li>
@@ -34,20 +28,12 @@
 					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
-                    {{ if admin == 1: }}
                     <li> | </li>
 					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
-                    {{ elif admin == 2: }}
-                    <li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
-                    {{else:}}
-                    {{pass}}
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
@@ -55,31 +41,64 @@
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<h4> 
-				<div id ="titulo"> Mi Perfil </div>
-			</h4>
-			<br>
+			<!-- Menu de navegacion lateral -->
+			<aside>
+				<ul>
+					<li id="layout_aside_gestionar">
+                        <h4> Gestionar:</h4>
+                    </li>
+					<!-- No se como hacer esto en web2py ---v  -->
+					<li id=layout_aside_tipos_de_actividad>
+                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">Tipos de Actividad</a>
+                    </li>
+					<li id="layout_aside_agregar_tipo">
+                        <a href="#">
+                            Actividades
+                        </a>
+                    </li>
+					<li id="layout_aside_validaciones">
+                        <a href="#">
+                            Validaciones
+                        </a>
+                    </li>
+					<li id="layout_aside_catalogos">
+                        <a href="#">
+                            Catalogos
+                        </a>
+                    </li>
+					<li id="layout_aside_usuarios">
+                        <a href="vGestionarUsuarios">
+                        Usuarios
+                        </a>
+                    </li>
+					<li id="layout_aside_backups">
+                        <a href="#">
+                            Backups
+                        </a>
+                    </li>
+					<br/>
+					<br>
+					<li id="layout_aside_logs">
+                        <a href="#">
+                            Consultar Logs
+                        </a>
+                    </li>
+					<li id="layout_aside_cambiar_tipo_usuario">
+                        <a href="#">
+                            Entrar como otro Tipo de Usuario
+                        </a>
+                    </li>
+				</ul>
+			</aside>
 			<h4>
-				<a id="editar" href="{{=URL('vEditarPerfil')}}" >
-					{{=IMG(_src=URL('static', 'images/Edit_26x26.png')), }}
-					Editar Perfil 
-				</a>
+			    <div id="bienvenido">  Bienvenido al SIRADEX </div>
 			</h4>
-			    <div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                    <div class=" container-fluid col-xs-6">
-                     {{=form1}}
-                    </div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                </div>
 			<!-- En esta seccion va todo el contenido de la pagina -->
 			<section class = "contenido">
 				
 				<!-- Cuando se retorne ejecute una funcion va a poner
 					 lo que esta retorne aqui -->
-				{{include}}
+				
 
 			</section><!-- close contenido -->
 			
@@ -87,7 +106,6 @@
 		
 		
 		<!-- Es un footer pues -->
-				<!-- Es un footer pues -->
 		<footer>
 			<nav>
 				<ul>
@@ -105,5 +123,6 @@
 				</ul>
 			</nav>
 		</footer>
+
 	</body>
 </html>

@@ -5,9 +5,8 @@
 		<meta charset = "UTF-8">
 		{{include 'web2py_ajax.html'}}
 		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/verPerfil.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{=URL('static', 'css/registroUsuario.css')}}" rel="stylesheet" type="text/css" />
 		<title> SIRADEX </title>
-		
 	</head>
 
 	<body>
@@ -34,20 +33,12 @@
 					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
-                    {{ if admin == 1: }}
                     <li> | </li>
 					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
-                    {{ elif admin == 2: }}
-                    <li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
-                    {{else:}}
-                    {{pass}}
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
@@ -55,31 +46,36 @@
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<h4> 
-				<div id ="titulo"> Editar Perfil </div>
-			</h4>
-			<br>
-			
+			<h4 id = titulo> Modificar Rol </h4>
+            <div id = error>
+                {{=message}}
+            </div>
 			<!-- En esta seccion va todo el contenido de la pagina -->
+			<section class = "contenido">
+				
+				<!-- Cuando se retorne ejecute una funcion va a poner
+					 lo que esta retorne aqui -->
+
                 <div>
-                    <div class="container-fluid col-md-2">
+                    <div class="container-fluid col-md-4">
                     </div>
                     <div class=" container-fluid col-xs-6">
-                     {{=form1}}
+                     {{=forma}}
                      {{=form}}
                     </div>
-                    <div class="container-fluid col-md-2">
+                    <div class="container-fluid col-md-4">
                     </div>
                 </div>
+
+			</section><!-- close contenido -->
 			
 		</section><!-- close main -->
 		
-		
 		<!-- Es un footer pues -->
-				<!-- Es un footer pues -->
 		<footer>
 			<nav>
 				<ul>
+					<li></li>
 					<li><a href = "#">Buscador</a></li>
 					<li> | </li>
 					<li><a href = "#">Webmail</a></li>
@@ -94,5 +90,6 @@
 				</ul>
 			</nav>
 		</footer>
+
 	</body>
 </html>

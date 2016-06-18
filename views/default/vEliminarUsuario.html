@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-{{extend 'layout.html'}}
+{{include 'layout.html'}}
 <html>
 	<head>
 		<meta charset = "UTF-8">
 		{{include 'web2py_ajax.html'}}
 		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/logIn.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{=URL('static', 'css/registroUsuario.css')}}" rel="stylesheet" type="text/css" />
 		<title> SIRADEX </title>
-		
-		{{block script}} {{end}}
 	</head>
 
 	<body>
@@ -19,34 +17,56 @@
 			</div>
 			
 			<!-- Menu del headder -->
-          <a  id = login class ='btn btn-default' href='https://secure.dst.usb.ve/login?service=http%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas'>
-                <span class="glyphicon glyphicon-user"></span>
-                 Iniciar Sesion
-         </a>
+			<nav>
+				<ul>
+					<li>
+						<a href = "#">
+							Ayuda
+						</a>
+					</li>
+					<li> | </li>
+					<li>
+						<a href = "#">
+							Contactenos
+						</a>
+					</li>
+					<li> | </li>
+					<li>
+						<a href = "#">
+							Busqueda
+						</a>
+					</li>
+					<li> | </li>
+					<li>
+						<a href = "{{=URL('vMenuPrincipal')}}">
+							Inicio
+						</a>
+					</li>
+					<!-- No se como hacer esto en web2py --^  -->
+				</ul>
+			</nav>
 		</header>
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<h1> 
-				<div id ="titulo"> {{block titulo}}{{end}} </div>
-			</h1>
+			<h4 id = titulo> Eliminar Usuario </h4>
+            <div id = error>
+                {{=message}}
+            </div>
 			<!-- En esta seccion va todo el contenido de la pagina -->
-                {{block contenido}}
-			<section>
-			</section><!-- close contenido -->
-                {{end}}
+			<section class = "contenido">
+				
 				<!-- Cuando se retorne ejecute una funcion va a poner
 					 lo que esta retorne aqui -->
-
+			</section><!-- close contenido -->
 			
 		</section><!-- close main -->
 		
-		
 		<!-- Es un footer pues -->
-				<!-- Es un footer pues -->
 		<footer>
 			<nav>
 				<ul>
+					<li></li>
 					<li><a href = "#">Buscador</a></li>
 					<li> | </li>
 					<li><a href = "#">Webmail</a></li>
@@ -61,5 +81,6 @@
 				</ul>
 			</nav>
 		</footer>
+
 	</body>
 </html>

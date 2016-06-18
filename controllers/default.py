@@ -9,63 +9,93 @@
 # -------------------------------------------------------------------------
 import os
 import re
-from gluon.tools import Crud
-def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+from usbutils import get_ldap_data, random_key
+import urllib2
+### required - do no delete
+def user(): return dict(form=auth())
+def download(): return response.download(request,db)
+def call(): return service()
+### end requires
 
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
-    datosComp = []
-    message=auth.settings.login_form.get_user()
-    print message
-    if message != None:
-        imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ message.get('username') +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career'")
-        for line in imprimir1.readlines():
-            line = line.split(':')
-            datosComp.append(line[1])   
-        #db.usuario.insert(ci=24242424,usbid=232323,telefono=1212,correo_alter = 'arty')
-        usuarioActual = db(db.usuario.ci == datosComp[3]).select()
-        print len(usuarioActual)
-        if len(usuarioActual) == 1:
-            for usuario in usuarioActual:
-                print usuario.telefono
-            redirect(URL('vMenuPrincipal'))
-        else:
-            db.usuario.insert(ci=datosComp[3],
-				usbid=datosComp[0],
-				nombres=datosComp[1],
-				apellidos=datosComp[2],
-				correo_inst=datosComp[4])
-            print "Registro"
-            usuarios = db(db.usuario).select()
-            for raw in usuarios:
-                print raw.nombres
-            redirect(URL('vRegistroUsuario'))
-        return dict(form = '')
+########################################################################################################
+############################################# FUNCIONES USUARIO ########################################
+########################################################################################################
+
+def login_cas():
+    if not request.vars.getfirst('ticket'):
+        #redirect(URL('error'))
+        pass
+    try:
+        import urllib2, ssl
+        ssl._create_default_https_context = ssl._create_unverified_context
+        url = "https://secure.dst.usb.ve/validate?ticket="+\
+              request.vars.getfirst('ticket') +\
+              "&service=http%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas"
+        req = urllib2.Request(url)
+        response = urllib2.urlopen(req)
+        the_page = response.read()
+
+    except Exception, e:
+        print "Exception: "
+        print e
+        # redirect(URL('error'))
+
+    if the_page[0:2] == "no":
+        pass
     else:
-	return dict(form = '')
+        # session.casticket = request.vars.getfirst('ticket')
+        data  = the_page.split()
+        usbid = data[1]
 
+        usuario = get_ldap_data(usbid) #Se leen los datos del CAS
+        tablaUsuarios = db.USUARIO
+
+        session.usuario = usuario
+        print "Hola",session.usuario
+        session.usuario['usbid'] = usbid
+
+        if not db(tablaUsuarios.usbid == usbid).isempty():
+            datosUsuario = db(tablaUsuarios.usbid==usbid).select()[0]
+            session.usuario['tipo'] = datosUsuario.tipo
+            redirect(URL('vMenuPrincipal'))            
+        else:
+            session.usuario['tipo'] = "Administrador"
+            db.USUARIO.insert(ci=session.usuario["cedula"],  # Lo insertamos en la base de datos.
+            usbid=session.usuario["usbid"],
+            nombres=session.usuario["first_name"],
+            apellidos=session.usuario["last_name"],
+            correo_inst=session.usuario["email"],
+            tipo = "Administrador")
+            redirect(URL('vRegistroUsuario'))
+
+def logout_cas():
+    session.usuario = None
+    return response.render()
+
+    
+    
+#Funcion del inicio
+def index():
+    datosComp = ["","","","","","","",""]
+    return response.render()
+
+# Controlador para el registro del usuario
 def vRegistroUsuario():
-    datosComp = []
-    message=auth.settings.login_form.get_user()
-    if message != None:
-        imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ message.get('username') +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career'")
-        for line in imprimir1.readlines():
-            line = line.split(':')
-            datosComp.append(line[1])
+    if session.usuario != None:
+        # Se usa un formulario que muestre los datos no modificables.
         form = SQLFORM.factory(
-            Field("USBID", default=datosComp[0],writable = False),
-            Field('Nombres',default=datosComp[1],writable = False),
-            Field('apellidos', default=datosComp[2],writable=False),
+            Field("USBID", default=session.usuario["usbid"],writable = False),
+            Field('Nombres',default=session.usuario["first_name"],writable = False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             readonly=True)
-        usuarios = db(db.usuario).select()
+
+        #Realiza las modificaciones sobre la base de datos en funcion de lo que introduzca el usuario.
+        usuarios = db(db.USUARIO).select()
         for raw in usuarios:
-            if raw.ci == datosComp[3]:
+            if raw.ci == session.usuario["cedula"]:
+                print("SE metio")
                 forma=SQLFORM(
-                    db.usuario,
+                    db.USUARIO,
                     raw,
                     button=['Registrarse'],
                     fields=['telefono','correo_alter'],
@@ -75,108 +105,253 @@ def vRegistroUsuario():
         if len(request.vars)!=0:
             nuevoTelefono = request.vars.telefono
             nuevoCorreoAlter = request.vars.correo_alter
-            db(db.usuario.ci == datosComp[3]).update(telefono=nuevoTelefono, correo_alter=nuevoCorreoAlter)
-            redirect(URL('vMenuPrincipal'))
-    return dict(form1 = form, form = forma)
+            db(db.USUARIO.ci == session.usuario["cedula"]).update(telefono=nuevoTelefono, correo_alter=nuevoCorreoAlter)
+            redirect(URL('vMenuPrincipal'))        # Redirige al usuario al menu principal.
+        return dict(form1 = form, form = forma)
+    else:
+        redirect(URL("index"))
 
 def vVerPerfil():
-    datosComp = []
-    message=auth.settings.login_form.get_user()
-    if message != None:
-        imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ message.get('username') +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career'")
-        for line in imprimir1.readlines():
-            line = line.split(':')
-            datosComp.append(line[1])
+    if session.usuario != None:
+        admin = 4
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
         tlf = None
         correo_a = None
         correo_i = None
-        usuarios = db(db.usuario).select()
+        usuarios = db(db.USUARIO).select()
         for raw in usuarios:
-            if raw.ci == datosComp[3]:
+            if raw.ci == session.usuario["cedula"]:
                 tlf = raw.telefono
                 correo_a = raw.correo_alter
                 correo_i = raw.correo_inst
         form = SQLFORM.factory(
-            Field("USBID", default=datosComp[0],writable = False),
-            Field('Nombres',default=datosComp[1],writable = False),
-            Field('apellidos', default=datosComp[2],writable=False),
+            Field("USBID", default=session.usuario["usbid"],writable = False),
+            Field('Nombres',default=session.usuario["first_name"],writable = False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             Field('Correo_Institucional', default=correo_i,writable=False),
             Field('Telefono', default=tlf,writable=False),
             Field('Correo_Alternativo', default=correo_a,writable=False),
             readonly=True)
-    return dict(form1 = form)
+        return dict(form1 = form,admin = admin)
+    else:
+        redirect(URL("index"))
+def vMenuPrincipal():
+    if session.usuario != None:
+        admin = 4
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
+        return dict(admin = admin)
+    else:
+        redirect(URL("index"))
 
-def vMenuPrincipal(): 
-    return response.render()
+def vMenuDex():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
+            admin = 4
+            if(session.usuario["tipo"] == "DEX"):
+                admin = 2
+            elif(session.usuario["tipo"] == "Administrador"):
+                admin = 1
+            else:
+                admin = 0
+            return dict(admin = admin)
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))
 
 def vEditarPerfil():
-    datosComp = []
-    message=auth.settings.login_form.get_user()
-    if message != None:
-        imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ message.get('username') +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career'")
-        for line in imprimir1.readlines():
-            line = line.split(':')
-            datosComp.append(line[1])
+    if session.usuario != None:
+        admin = 4
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
         form = SQLFORM.factory(
-            Field("USBID", default=datosComp[0],writable = False),
-            Field('Nombres',default=datosComp[1],writable = False),
-            Field('apellidos', default=datosComp[2],writable=False),
+            Field("USBID", default=session.usuario["usbid"],writable = False),
+            Field('Nombres',default=session.usuario["first_name"],writable = False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             readonly=True)
-        usuarios = db(db.usuario).select()
+        usuarios = db(db.USUARIO).select()
+        # Modificar datos del perfil.
         for raw in usuarios:
-            if raw.ci == datosComp[3]:
+            if raw.ci == session.usuario["cedula"]:
                 forma=SQLFORM(
-                    db.usuario,
+                    db.USUARIO,
                     record=raw,
-					button=['Actualizar'],
-					fields=['telefono','correo_alter'],
-					submit_button='Actualizar',
-					labels={'telefono':'Teléfono', 'correo_alter':'Correo alternativo'})
-		#if forma.acst.cepts(request.vars, session):
+                    button=['Actualizar'],
+                    fields=['telefono','correo_alter'],
+                    submit_button='Actualizar',
+                    labels={'telefono':'Teléfono', 'correo_alter':'Correo alternativo'})
         if len(request.vars)!=0:
             nuevoTelefono = request.vars.telefono
             nuevoCorreoAlter = request.vars.correo_alter
-            db(db.usuario.ci == datosComp[3]).update(telefono=nuevoTelefono, correo_alter=nuevoCorreoAlter)
+            db(db.USUARIO.ci == session.usuario["cedula"]).update(telefono=nuevoTelefono, correo_alter=nuevoCorreoAlter)
             redirect(URL('vVerPerfil'))
-		#break
-                #elif forma.errors:
-                #    print ("Error")
-                #else:
-    return dict(form1 = form, form = forma)
 
-def user():
-    """
-    exposes:
-    http://..../[app]/default/user/login
-    http://..../[app]/default/user/logout
-    http://..../[app]/default/user/register
-    http://..../[app]/default/user/profile
-    http://..../[app]/default/user/retrieve_password
-    http://..../[app]/default/user/change_password
-    http://..../[app]/default/user/bulk_register
-    use @auth.requires_login()
-        @auth.requires_membership('group name')
-        @auth.requires_permission('read','table name',record_id)
-    to decorate functions that need access control
-    also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
-    """
-    return dict(form=auth())
+        return dict(form1 = form, form = forma, admin = admin)
+    else:
+        redirect(URL("index"))
 
+##########################################################################################################
+###################################  FUNCIONES GESTIONAR USUARIO  ########################################
+##########################################################################################################
 
-@cache.action()
-def download():
-    """
-    allows downloading of uploaded files
-    http://..../[app]/default/download/[filename]
-    """
-    return response.download(request, db)
+def vMenuAdmin():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "Administrador":
+            session.message = ""
+            return response.render()
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))
 
+def vGestionarUsuarios():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "Administrador":
+            aux = db(db.USUARIO).select(db.USUARIO.usbid,db.USUARIO.nombres,db.USUARIO.apellidos,db.USUARIO.tipo)
+            return dict(usuarios = aux,message = session.message)
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))
+    
+def vAgregarUsuario():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "Administrador":
+            message = ""
+            datosCompAux = ["","","","","","","",""]    # En esta lista guardaremos todos los datos que seran extraidos del LDAP para crear el nuevo usuario
+            forma=SQLFORM(                              # Se hace un formulario para introducir un USBID.
+                db.USUARIO,
+                button=['Agregar'],
+                fields=['usbid','tipo','telefono','correo_alter'],
+                submit_button='Agregar',
+                labels={'usbid':'USBID','telefono':'Teléfono', 'correo_alter':'Correo alternativo','tipo':'Tipo'})
+            print(request.vars)
+            # Si el largo de request.vars es mayor a cero, quiere decir que de introdujo informacion en el formulario.
+            if len(request.vars)!=0:
+                # En usbidAux almacenamos el usbid proporcionado por el administrador
+                # En imprimir1 almacenamos la informacion del LDAP con grep
+                usbidAux = request.vars.usbid
+                telefonoAux = request.vars.telefono
+                correo_alterAux = request.vars.correo_alter
+                tipoAux = request.vars.tipo
+                if(len(tipoAux) < 3):
+                    message = T("Debe Especificar un Tipo")
+                    redirect(URL("vAgregarUsuario"))
+                imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ usbidAux +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career\|^gidNumber'")
+                
+                # Recorremos cada linea del archivo para realizar las asignaciones correspondientes de acuerdo a la informacion proporcionada por el LDAP
+                for line in imprimir1.readlines():
+                    line = line.split(':')        # Separamos los campos por los dos puntos.
+                    if line[0] == "uid":          # Primera Posicion: Carnet con guion.
+                        datosCompAux[0] = line[1]
+                    elif line[0] == "givenName":  # Segunda Posicion: Nombre(s) del usuario.
+                        datosCompAux[1] = line[1]
+                    elif line[0] == "sn":         # Tercera Posicion: Apellido(s) del usuario.
+                        datosCompAux[2] = line[1]
+                    elif line[0] == "personalId": # Cuarta Posicion: Cedula de identidad del usuario.
+                        datosCompAux[3] = line[1]
+                    elif line[0] == "gidNumber":  # Quinta Posicion: Rol del usuario (Profesor, estudiante, etc.).
+                        datosCompAux[4] = line[1]
+                    elif line[0] == "mail":       # Sexta Posicion: Email del usuario.
+                        datosCompAux[5] = line[1]
+                    elif line[0] == "career":     # Septima posicion: Carrera del usuario.
+                        datosCompAux[6] = line[1]
+                    elif line[0] == "studentId":  # Octava posicion: Carnet sin guion.
+                        datosCompAux[7] = line[1]
+                
+                # Si datosCompAux esta vacio, quiere decir que no se el carnet no esta en LDAP
+                if datosCompAux[0]=="":
+                    message = T("El usuario no se encuentra asociado al CAS")
+                    #return dict(message = response.flash)
+                # En caso contrario, el usuario debe ser agregado a la base de datos de la universidad.
+                else:
+                    # Primero verificamos que el usuario que intenta agregarse no esta en la base de datos
+                    print(datosCompAux)
+                    print(tipoAux)
+                    if db(db.USUARIO.usbid == datosCompAux[0]).isempty():
+                        # Lo insertamos en la base de datos.
+                        print datosCompAux[3][1:len(datosCompAux[3])-1]
+                        db.USUARIO.insert(ci=datosCompAux[3][:len(datosCompAux[3])-2],
+                                usbid=usbidAux,
+                                nombres=datosCompAux[1],
+                                apellidos=datosCompAux[2],
+                                correo_inst=datosCompAux[5],
+                                telefono = telefonoAux,
+                                correo_alter = correo_alterAux,
+                                tipo = tipoAux)
+                        
+                        # Luego de insertar al usuario, mostramos un formulario al administrador con los datos de la persona agregada
+                        form = SQLFORM.factory(
+                            Field("USBID", default=datosCompAux[0],writable = False),
+                            Field('Nombres',default=datosCompAux[1],writable = False),
+                            Field('apellidos', default=datosCompAux[2],writable=False),
+                            readonly=True)
+                        return dict(form = form, message = message, bool = 1)
+                    else:
+                        message= T("El usuario ya esta registrado")
+                        #return dict(message = response.flash)
+            return dict(form = forma,message = message)
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))
+        
+def vEliminarUsuario():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "Administrador":
+            if len(request.args)!=0 :
+                if request.args[0] != session.usuario["usbid"]:
+                    session.message = ""
+                    if (not db(db.USUARIO.usbid == request.args[0]).isempty()):
+                        db(db.USUARIO.usbid == request.args[0]).delete()
+                        redirect(URL('vGestionarUsuarios'))
+                else:
+                    session.message = T("No se puede eliminar a usted mismo")
+                    redirect(URL('vGestionarUsuarios'))
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))
 
-def call():
-    """
-    exposes services. for example:
-    http://..../[app]/default/call/jsonrpc
-    decorate with @services.jsonrpc the functions to expose
-    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
-    """
-    return service()
+def vModificarRol():
+    if session.usuario != None:
+        if session.usuario["tipo"] == "Administrador":
+            message= ""
+            form = SQLFORM.factory(
+                            Field("USBID", default=request.args[0],writable = False),
+                            readonly=True)
+            forma=SQLFORM(        
+                    db.USUARIO,
+                    button=['Actualizar'],
+                    fields=['tipo'],
+                    submit_button='Actualizar',
+                    labels={'tipo':'TIPO'})
+            if len(request.vars)!=0:
+                if (not db(db.USUARIO.usbid == request.args[0]).isempty()):
+                    if(request.args[0] != session.usuario["usbid"]): 
+                        db(db.USUARIO.usbid == request.args[0]).update(tipo = request.vars.tipo)
+                        redirect(URL('vGestionarUsuarios'))
+                    else:
+                        message = T("No puede Cambiar sus Permisos")
+                else:
+                    message = T("El Usuario no se encuentra registrado")
+
+            return dict(forma = form, form = forma, message = message)
+        else:
+            redirect(URL("vMenuPrincipal"))
+    else:
+        redirect(URL("index"))

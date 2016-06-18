@@ -47,10 +47,15 @@ header nav ul li a {
 }
 
 #titulo{
-	color: black;
+	color: black
 	margin: 25px auto;
 	text-align: center;
 }
+
+#login{
+    margin: auto 939px;
+}
+
 
 footer {
 	background: #AFC1CB;
