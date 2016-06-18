@@ -8,7 +8,8 @@ db.define_table('tipo_actividad',
                 Field('validacion','text', notnull = True),
                 Field('nro_productos', 'integer'),
                 Field('nro_campos','integer'),
-                Field('ci_usuario_propone','reference usuario')
+                Field('ci_usuario_propone','reference usuario'),
+                format='%(nombre)s'
                 )
 
 db.define_table('actividad',
@@ -37,11 +38,3 @@ db.define_table('act_posee_campo',
                 Field('id_tipo_act','integer','reference tipo_actividad'),
                 Field('id_campo' ,'reference campo')
                 )
-
-db.define_table('client',
-     Field('name'))
-
-db.define_table('address',
-    Field('client','reference client',
-          writable=False,readable=False),
-    Field('street'),Field('city'))
