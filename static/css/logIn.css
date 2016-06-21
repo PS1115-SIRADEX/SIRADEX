@@ -4,17 +4,11 @@
 }
 
 body {
-	/* background: #FFFFFF; */
+	background: #FFFFFF;
 }
 
-header{
--webkit-box-shadow: 0 0 0px 0px #000; */
-    -moz-box-shadow: 0 0 0px 0px #000;
-    /* box-shadow: 0 0 8px 2px #000; */
-    margin-bottom: 10px;
-}
 header, .main, footer {
-	/* background: #FFFFFF; */
+	background: #FFFFFF;
 	width: 90%;
 	max-width: 1060px;
 	margin: 20px auto;	/* Esto hace que se centre (con espaciado de 20px) */
@@ -22,7 +16,7 @@ header, .main, footer {
 
 header nav{
 	overflow: hidden;	/* Resuelve problema con float:right */
-	/* background: #AFC1CB; */
+	background: #AFC1CB;
 	padding: 4px 5px;
 }
 
@@ -82,18 +76,4 @@ footer nav ul li {
 
 footer nav ul li a {
 	text-decoration: none;
-}
-
-/* PROPIEDADES SOBRE TABLAS */
-
-.table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #EAEBFF;
-}
-
-.table-hover>tbody>tr:hover {
-    background-color: #BBDEFB;
-}
-
-.table>tbody>tr>td{
-	border-top: 0px solid;
 }

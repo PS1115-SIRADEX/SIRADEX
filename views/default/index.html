@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{extend 'layout.html'}}
+{{include 'layout.html'}}
 <html>
 	<head>
 		<meta charset = "UTF-8">
@@ -8,7 +8,6 @@
 		<link href="{{=URL('static', 'css/logIn.css')}}" rel="stylesheet" type="text/css" />
 		<title> SIRADEX </title>
 		
-		{{block script}} {{end}}
 	</head>
 
 	<body>
@@ -19,7 +18,7 @@
 			</div>
 			
 			<!-- Menu del headder -->
-          <a  id = login class ='btn btn-default' href='https://secure.dst.usb.ve/login?service=http%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas'>
+          <a  id = login class ='btn btn-default' href='https://secure.dst.usb.ve/login?service=https%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas'>
                 <span class="glyphicon glyphicon-user"></span>
                  Iniciar Sesion
          </a>
@@ -28,16 +27,14 @@
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
 			<h1> 
-				<div id ="titulo"> {{block titulo}}{{end}} </div>
+				<div id ="titulo"> Bienvenidos a SIRADEX </div>
 			</h1>
 			<!-- En esta seccion va todo el contenido de la pagina -->
-                {{block contenido}}
-			<section>
-			</section><!-- close contenido -->
-                {{end}}
-				<!-- Cuando se retorne ejecute una funcion va a poner
-					 lo que esta retorne aqui -->
+			<section class = "contenido">
+					<!-- Cuando se retorne ejecute una funcion va a poner
+								 lo que esta retorne aqui -->
 
+			</section><!-- close contenido -->
 			
 		</section><!-- close main -->
 		

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 {
+'': '',
 '!langcode!': 'es',
 '!langname!': 'Español',
 '"update" is an optional expression like "field1=\'newvalue\'". You cannot update or delete the results of a JOIN': '"actualice" es una expresión opcional como "campo1=\'nuevo_valor\'". No se puede actualizar o eliminar resultados de un JOIN',
@@ -311,6 +312,7 @@
 'Record id': 'Id de registro',
 'register': 'regístrese',
 'Register': 'Regístrese',
+'Registrar Tipo Actividad': 'Registrar Tipo Actividad',
 'Registrarse': 'Registrarse',
 'Registration identifier': 'Identificador de Registro',
 'Registration key': 'Llave de registro',
@@ -424,6 +426,7 @@
 'Username retrieve': 'Recuperar nombre de usuario',
 'value already in database or empty': 'el valor ya existe en la base de datos o está vacío',
 'value not allowed': 'valor no permitido',
+'Value not allowed': 'Value not allowed',
 'value not in database': 'el valor no está en la base de datos',
 'Verify Password': 'Verificar Contraseña',
 'Version': 'Versión',

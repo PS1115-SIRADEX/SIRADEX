@@ -205,7 +205,7 @@ db.define_table('PERMISOS_TIPO_ACT',
 db.define_table('CATALOGO',
     Field('id_catalogo',type='id'),
     Field('nro_campos',type='integer'),
-    Field('nombre',type='string', length=128),
+    Field('nombre',type='string',length=128, unique = True),
     primarykey=['id_catalogo'],
     migrate=False
 );
@@ -229,6 +229,7 @@ db.define_table('CAMPO_CATALOGO',
     Field('id_campo_cat', type='id'),
     Field('tipo_cat',type='string', length=256),
     Field('nombre', type='string', length=64),
+    Field('eliminar', type='boolean'),
     primarykey=['id_campo_cat'],
     migrate=False
 );

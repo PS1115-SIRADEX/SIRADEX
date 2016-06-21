@@ -27,11 +27,9 @@
                     <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
-					<li><a href = "#">Contactenos</a></li>
+					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
@@ -39,30 +37,27 @@
 					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{ elif admin == 2: }}
                     <li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{else:}}
                     {{pass}}
-					<!-- No se como hacer esto en web2py --^  -->
+					<li> | </li>
+                    <li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 				</ul>
 			</nav>
 		</header>
 			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<h4> 
+			<h4>
 				<div id ="titulo"> Mi Perfil </div>
 			</h4>
 			<br>
 			<h4>
 				<a id="editar" href="{{=URL('vEditarPerfil')}}" >
-					{{=IMG(_src=URL('static', 'images/Edit_26x26.png')), }}
-					Editar Perfil 
+					{{=IMG(_src=URL('static', 'iconos/Edit.png')), }}
+					Editar Perfil
 				</a>
 			</h4>
 			    <div>
@@ -100,8 +95,6 @@
 					<li><a href = "#">Directorio USB</a></li>
 					<li> | </li>
 					<li><a href = "#">Calendario</a></li>
-					<li> | </li>
-					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
 		</footer>

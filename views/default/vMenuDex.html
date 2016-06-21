@@ -26,11 +26,9 @@
                     <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
-					<li><a href = "#">Contactenos</a></li>
+					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
@@ -38,18 +36,13 @@
 					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{ elif admin == 2: }}
                     <li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{else:}}
                     {{pass}}
-
-                     
-					<!-- No se como hacer esto en web2py --^  -->
+                    <li> | </li>
+                    <li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -62,18 +55,19 @@
 					<li id="layout_aside_gestionar">
                         <h4> Gestionar:</h4>
                     </li>
-					<!-- No se como hacer esto en web2py ---v  -->
+                    <li id="layout_aside_agregar_tipo">
+                        <a href="#">
+                            Búsquedas Avanzadas
+                        </a>
+                    </li>
 					<li id=layout_aside_tipos_de_actividad>
-                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">Tipos de Actividad</a>
+                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">
+                            Tipos de Actividad
+                        </a>
                     </li>
 					<li id="layout_aside_agregar_tipo">
                         <a href="#">
                             Validaciones
-                        </a>
-                    </li>
-                    <li id="layout_aside_agregar_tipo">
-                        <a href="#">
-                            Búsquedas Avanzadas
                         </a>
                     </li>
 				</ul>
@@ -81,10 +75,6 @@
 			<h4>
 			    <div id="bienvenido">  Bienvenido al SIRADEX </div>
 			</h4>
-			<a id="agregar" href="#">
-				{{=IMG(_src=URL('static', 'images/Add_26x26.png')), }}
-				Agregar Actividad
-			</a>
 			<h4>
 				<div id="mostrar"> No hay Actividad que mostrar </div>
 			</h4>
@@ -113,8 +103,6 @@
 					<li><a href = "#">Directorio USB</a></li>
 					<li> | </li>
 					<li><a href = "#">Calendario</a></li>
-					<li> | </li>
-					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
 		</footer>

@@ -30,7 +30,7 @@ def login_cas():
         ssl._create_default_https_context = ssl._create_unverified_context
         url = "https://secure.dst.usb.ve/validate?ticket="+\
               request.vars.getfirst('ticket') +\
-              "&service=http%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas"
+              "&service=https%3A%2F%2F159.90.211.179%2FSiraDex%2Fdefault%2Flogin_cas"
         req = urllib2.Request(url)
         response = urllib2.urlopen(req)
         the_page = response.read()
@@ -57,7 +57,7 @@ def login_cas():
         if not db(tablaUsuarios.usbid == usbid).isempty():
             datosUsuario = db(tablaUsuarios.usbid==usbid).select()[0]
             session.usuario['tipo'] = datosUsuario.tipo
-            redirect(URL('vMenuPrincipal'))            
+            redirect(URL('vMenuPrincipal'))
         else:
             session.usuario['tipo'] = "Administrador"
             db.USUARIO.insert(ci=session.usuario["cedula"],  # Lo insertamos en la base de datos.
@@ -171,7 +171,6 @@ def vMenuDex():
 
 def vEditarPerfil():
     if session.usuario != None:
-        admin = 4
         if(session.usuario["tipo"] == "DEX"):
             admin = 2
         elif(session.usuario["tipo"] == "Administrador"):
@@ -239,12 +238,12 @@ def vAgregarUsuario():
                 fields=['usbid','tipo','telefono','correo_alter'],
                 submit_button='Agregar',
                 labels={'usbid':'USBID','telefono':'Teléfono', 'correo_alter':'Correo alternativo','tipo':'Tipo'})
-            print(request.vars)
             # Si el largo de request.vars es mayor a cero, quiere decir que de introdujo informacion en el formulario.
             if len(request.vars)!=0:
                 # En usbidAux almacenamos el usbid proporcionado por el administrador
                 # En imprimir1 almacenamos la informacion del LDAP con grep
                 usbidAux = request.vars.usbid
+                user = get_ldap_data(usbidAux)
                 telefonoAux = request.vars.telefono
                 correo_alterAux = request.vars.correo_alter
                 tipoAux = request.vars.tipo
@@ -274,22 +273,20 @@ def vAgregarUsuario():
                         datosCompAux[7] = line[1]
                 
                 # Si datosCompAux esta vacio, quiere decir que no se el carnet no esta en LDAP
+                print(datosCompAux)
                 if datosCompAux[0]=="":
                     message = T("El usuario no se encuentra asociado al CAS")
                     #return dict(message = response.flash)
                 # En caso contrario, el usuario debe ser agregado a la base de datos de la universidad.
                 else:
                     # Primero verificamos que el usuario que intenta agregarse no esta en la base de datos
-                    print(datosCompAux)
-                    print(tipoAux)
-                    if db(db.USUARIO.usbid == datosCompAux[0]).isempty():
+                    if db(db.USUARIO.usbid == usbidAux).isempty():
                         # Lo insertamos en la base de datos.
-                        print datosCompAux[3][1:len(datosCompAux[3])-1]
-                        db.USUARIO.insert(ci=datosCompAux[3][:len(datosCompAux[3])-2],
+                        db.USUARIO.insert(ci=user["cedula"],
                                 usbid=usbidAux,
                                 nombres=datosCompAux[1],
                                 apellidos=datosCompAux[2],
-                                correo_inst=datosCompAux[5],
+                                correo_inst=user["email"],
                                 telefono = telefonoAux,
                                 correo_alter = correo_alterAux,
                                 tipo = tipoAux)
@@ -320,7 +317,7 @@ def vEliminarUsuario():
                         db(db.USUARIO.usbid == request.args[0]).delete()
                         redirect(URL('vGestionarUsuarios'))
                 else:
-                    session.message = T("No se puede eliminar a usted mismo")
+                    session.message = T("Para eliminar su cuenta, por favor comuníquese con un administrador")
                     redirect(URL('vGestionarUsuarios'))
         else:
             redirect(URL("vMenuPrincipal"))
@@ -346,7 +343,7 @@ def vModificarRol():
                         db(db.USUARIO.usbid == request.args[0]).update(tipo = request.vars.tipo)
                         redirect(URL('vGestionarUsuarios'))
                     else:
-                        message = T("No puede Cambiar sus Permisos")
+                        message = T("Para cambiar sus permisos, por favor comuníquese con un administrador")
                 else:
                     message = T("El Usuario no se encuentra registrado")
 

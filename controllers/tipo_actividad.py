@@ -190,7 +190,7 @@ def eliminar_campos():
     # Borro el tipo actiidad
     db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo).delete()
     
-    redirect(URL('gestionar.html'))
+    redirect(URL('vGestionarCatalogo'))
 
 '''
  Funcion que envia un tipo actividad a la papelera

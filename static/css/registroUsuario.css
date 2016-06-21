@@ -34,9 +34,24 @@ header nav ul li a {
 	text-decoration: none;
 }
 
-.main{
-	text-align: center;
-	margin: 20px auto;
+.main aside {
+	float: left;
+	width: 15%;
+}
+
+.main aside ul {
+	list-style: none;
+}
+
+.main aside ul li {
+	padding: 5px 0px;
+	text-align: right;
+	color: #47A2D0;
+}
+
+.main aside ul li a {
+	text-decoration: none;
+	color: #47A2D0;
 }
 
 .main .contenido {
@@ -54,10 +69,13 @@ footer {
 	padding: 10px 0px;
 }
 
-footer nav{
+footer nav {
 	overflow: hidden;	/* Resuelve problema con float:right */
 	background: #AFC1CB;
 	padding: 4px 5px;
+    display: inline-block;
+    float: none;
+    vertical-align: top;
 }
 
 footer nav ul {
@@ -72,6 +90,15 @@ footer nav ul li {
 footer nav ul li a {
 	text-decoration: none;
 }
+
+table img {
+    width: 26px;
+}
+
+section img {
+    width: 26px;
+}
+
 #titulo {
 	color: blue;
 }

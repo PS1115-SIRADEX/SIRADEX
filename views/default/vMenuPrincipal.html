@@ -26,11 +26,9 @@
                     <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
-					<li><a href = "#">Contactenos</a></li>
+					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
@@ -38,18 +36,13 @@
 					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{ elif admin == 2: }}
                     <li> | </li>
                     <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Usuario</a></li>
                     {{else:}}
                     {{pass}}
-
-                     
-					<!-- No se como hacer esto en web2py --^  -->
+                    <li> | </li>
+                    <li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -57,27 +50,30 @@
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
 			<!-- Menu de navegacion lateral -->
+            <aside>
+				<ul>
+					<li id="layout_aside_gestionar">
+                        <h4> Gestionar:</h4>
+                    </li>
+                    <li id="layout_aside_backups">
+                        <a href="#">
+                            Actividades
+                        </a>
+                    </li>
+				</ul>
+			</aside>
 			<h4>
 			    <div id="bienvenido">  Bienvenido al SIRADEX </div>
 			</h4>
-			<a id="agregar" href="#">
-				Gestionar Actividad
-			</a>
 			<h4>
 				<div id="mostrar"> No hay Actividad que mostrar </div>
 			</h4>
 			<!-- En esta seccion va todo el contenido de la pagina -->
 			<section class = "contenido">
-				
 				<!-- Cuando se retorne ejecute una funcion va a poner
 					 lo que esta retorne aqui -->
-				
-
 			</section><!-- close contenido -->
-			
 		</section><!-- close main -->
-		
-		
 		<!-- Es un footer pues -->
 		<footer>
 			<nav>
@@ -91,8 +87,6 @@
 					<li><a href = "#">Directorio USB</a></li>
 					<li> | </li>
 					<li><a href = "#">Calendario</a></li>
-					<li> | </li>
-					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
 		</footer>

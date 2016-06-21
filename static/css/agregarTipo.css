@@ -22,6 +22,9 @@ table tr td {
     text-align: center;
 }
 
+#titulo {
+    color: blue;
+}
 
 /* Botones
 -------------------------------------------------------------------------*/

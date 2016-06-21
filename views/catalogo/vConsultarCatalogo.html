@@ -72,51 +72,13 @@
 				</ul>
 			</aside>
             <section class = "contenido">
-                <h4 id = "titulo"> Gestión de Usuarios </h4>
+                <h4 id = "titulo"> Gestión de Catalogos </h4>
                 <p>
-                    <a href = "{{=URL('vAgregarUsuario')}}">
+                    <a href = "{{=URL('vAgregarElementoCampo')}}">
                         {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')) }}
-                        Agregar Usuario
+                        Agregar Elemento
                     </a>
                 </p>
-                <div id = "error">
-                    {{=message}}
-                </div>
-                <br/>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <td class="col-md-4"><b>Usbid</b></td>
-                            <td class="col-md-5"><b>Nombres</b></td>
-                            <td class="col-md-6"><b>Apellidos</b></td>
-                            <td class="col-md-7"><b>Tipo</b></td>
-                            <td class="col-md-1"> </td>
-                            <td class="col-md-1"> </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{for usuario in usuarios:}}
-                            <tr>
-                                <td class="col-md-4">
-                                    {{ =usuario.usbid}}
-                                </td>
-                                <td class="col-md-5">{{ =usuario.nombres}}</td>
-                                <td class="col-md-6">{{ =usuario.apellidos}}</td>
-                                <td class="col-md-7">{{ =usuario.tipo}}</td>
-                                <td class="col-md-1">
-                                    <a href = "{{=URL(f='vModificarRol', args=[ usuario.usbid ] )}}">
-                                        {{=IMG(_src=URL('static', 'iconos/Edit.png')), }}
-                                    </a>
-                                </td>
-                                <td class="col-md-1">
-                                    <a href = "{{=URL(f='vEliminarUsuario', args=[ usuario.usbid ] )}}">
-                                        {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {{pass}}
-                    </tbody>
-                </table>
             </section><!-- close main -->
         </section>
         <!-- Es un footer pues -->

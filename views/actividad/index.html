@@ -1,131 +1,82 @@
-{{extend 'default/index.html'}}
+<!DOCTYPE html>
+{{include 'layout.html'}}
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		{{include 'web2py_ajax.html'}}
+		<!-- hago el link con el CSS de esta pagina -->
+		<link href="{{=URL('static', 'css/logIn.css')}}" rel="stylesheet" type="text/css" />
+		<title> SIRADEX </title>
+        {{block script}}
+        {{end}}
+	</head>
 
+	<body>
+		<header>
+			<!-- Banner de SIRADEX -->
+			<div id = "logo">
+				{{=IMG(_src=URL('static', 'images/banner.jpg')) }}
+			</div>
+			
+			<!-- Menu del headder -->
+            <nav>
+                <ul>
+                    <li><a class ='btn btn-primary btn-xs' href='../default/logout_cas'>
+                    <span class="glyphicon glyphicon-user"></span>
+                     Cerrar Sesion
+                    </a></li>
+                    <li> | </li>
+                    <li><a href = "#">Ayuda</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Contáctenos</a></li>
+                    <li> | </li>
+                    <li><a href = "#">Busqueda</a></li>
+                    <li> | </li>
+                    <li><a href = "{{=URL(c='default',f='vVerPerfil')}}">Ver Perfil</a></li>
+                    <li> | </li>
+                    <li><a href = "{{=URL(c='default',f='vMenuAdmin')}}">Administrador</a></li>
+                    <li> | </li>
+                    <li><a href = "{{=URL(c='default',f='vMenuDex')}}">DEX</a></li>
+                    <li> | </li>
+                    <li><a href = "{{=URL('gestionar')}}">Inicio</a></li>
+                </ul>
+            </nav>
+		</header>
+			
+		<!-- Contenido principal de la pagina -->
+		<section class = "main">
+			<h1> 
+				<div id ="titulo"> 
+					{{block titulo}}
+					{{end}}
+				</div>
+			</h1>
+			<!-- En esta seccion va todo el contenido de la pagina -->
+			<section class = "contenido" style="width:100%">
+				{{block contenido}}
+				{{end}}
 
-{{block titulo}}Gestion de Actividades{{end}}
-
-{{block contenido}}
-<a href ="{{=URL('tipos')}}"> 
-    {{=IMG(_src=URL('static', 'images/i_add.png'),_height='25'), }}
-</a>Agregar Actividad
-<br>
-<h3>Actividades registradas en el sistema</h3>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Participantes</th>
-            <th>Tipo Acticidad</th>
-            <th>Detalles</th>
-            <th>Creacion</th>
-            <th>Modificacion</th>
-            <th>Valid</th>
-            <th> </th>
-        </tr>
-    </thead>
-    <tbody>
-        
-    <tr>
-    {{if len(rows) == 0:}}
-    No hay actividad que mostrar
-    {{else:}}
-     {{for x in rows:}}
-        <td> {{=x.ci_usuario_crea}}</td>
-        <td> {{=x.id_tipo}}</td>
-        <td>  
-            <div class="detalles">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi a in possimus odio, eveniet accusamus neque, fuga vel culpa distinctio at aspernatur esse, optio qui aliquid error sapiente cupiditate quos!
-            </div>
-        </td>
-        <td> 00/Ene/0000</td>
-        <td> <!-- Modificacion --></td>
-        <td> {{if x.validacion == "En espera":}}
-                {{=IMG(_src=URL('static', 'images/i_clock.png'),
-                _height='50',
-                _title="En Espera") }}
-            
-            {{elif x.validacion == "Aceptado":}}
-                {{=IMG(_src=URL('static', 'images/i_check.png'),
-                _height='50',
-                _title="Aceptado") }}
-            
-            {{elif x.validacion == "Rechazado":}}
-                {{=IMG(_src=URL('static', 'images/i_ex.png'),
-                _height='50',
-                _title="Rechazado") }}
-            
-            {{pass}}
-                
-        </td>
-        <td> 
-        <!-- Boton Modificar -->
-            <a href="{{=URL('modificar',args=x.id)}}">
-                {{=IMG(_src=URL('static', 'images/i_edit1.png'),
-                _height='25',
-                _title="Modificar") }}
-            </a>
-        </td>
-        <!-- Boton Descargar -->
-        <td> 
-            {{=IMG(_src=URL('static', 'images/i_download.png'),
-            _height='25',
-            _title="Descargar") }}
-        </td>
-        <!-- Boton Eliminar -->
-        <td> 
-            {{=IMG(_src=URL('static', 'images/i_delete1.png'),
-            _height='25',
-            _title="Eliminar") }}
-        </td>
-     </tr>
-     {{pass}}
-     {{pass}}
-
-    </tbody>
-</table>
-{{end}}
-
-{{block script}}
-<!-- SCRIPT PARA MOSTRAR Y OCULTAR DETALLES -->
-
-<script>
-
-$(function(){
-    $('.detalles').each(function(event){ /* selecciona los div con la clase .detalles*/
-    
-        var largo_max = 150; /* indica cuantos caracteres apareceran antes de que aparezca "Mas detalles" */
-
-        if($(this).html().length > largo_max){
-            var contenido_corto   = $(this).html().substr(0,largo_max); /* Divide el contenido en dos partes */
-            var contenido_largo    = $(this).html().substr(largo_max);
-            
-            $(this).html(contenido_corto+' <span class="ocultar">(...)</span>'+
-                         '<a href="#" class="leer_mas"><br/>Mas detalles</a>'+
-                         '<span class="mas_texto" style="display:none;">'+contenido_largo+'</span>'+
-                         '<a href="#" class="leer_menos" style="display:none;"><br/>Menos detalles</a>'); /* Nueva forma del contenido, para usar la funcionalidad */
-
-                         
-            $(this).find('a.leer_mas').click(function(event){
-                event.preventDefault();
-                $(this).hide(); /* esconde "Mas detalles" */
-                $(this).parents('.detalles').find('.ocultar').hide(); /* esconde los puntos suspensivos */
-                $(this).parents('.detalles').find('.mas_texto').show(); /* muestra el resto del texto */
-                $(this).parents('.detalles').find('.leer_menos').show(); /* muestra "Menos detalles" */
-         
-            });
-
-            $(this).find('a.leer_menos').click(function(event){
-                event.preventDefault(); 
-                $(this).hide(); /* esconde "Menos detalles" */
-                $(this).parents('.detalles').find('.ocultar').show(); /* muestra los puntos suspensivos */
-                $(this).parents('.detalles').find('.mas_texto').hide(); /* esconde el texto largo */
-                $(this).parents('.detalles').find('.leer_mas').show(); /* muestra "Mas detalles" */
-         
-            });
-        }
-
-
-        
-    });
-})
-</script>
-
-{{end}}
+			</section><!-- close contenido -->
+			
+		</section><!-- close main -->
+		
+		
+		<!-- Es un footer pues -->
+		<footer>
+			<nav>
+				<ul>
+					<li><a href = "#">Buscador</a></li>
+					<li> | </li>
+					<li><a href = "#">Webmail</a></li>
+					<li> | </li>
+					<li><a href = "#">Aula Virtual USB</a></li>
+					<li> | </li>
+					<li><a href = "#">Directorio USB</a></li>
+					<li> | </li>
+					<li><a href = "#">Calendario</a></li>
+					<li> | </li>
+				</ul>
+			</nav>
+		</footer>
+	</body>
+</html>

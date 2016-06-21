@@ -72,13 +72,9 @@
 				</ul>
 			</aside>
             <section class = "contenido">
-                <h4 id = "titulo"> Gestión de Usuarios </h4>
+                <h4 id = "titulo"> Gestión de Catalogos </h4>
                 <p>
-                    <a href = "{{=URL('vAgregarUsuario')}}">
-                        {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')) }}
-                        Agregar Usuario
-                    </a>
-                </p>
+                    {{ = forma}}
                 <div id = "error">
                     {{=message}}
                 </div>
@@ -86,30 +82,30 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <td class="col-md-4"><b>Usbid</b></td>
-                            <td class="col-md-5"><b>Nombres</b></td>
-                            <td class="col-md-6"><b>Apellidos</b></td>
-                            <td class="col-md-7"><b>Tipo</b></td>
-                            <td class="col-md-1"> </td>
-                            <td class="col-md-1"> </td>
+                            <td class="col-md-4"><b>Nombre</b></td>
+                            <td class="col-md-5"><b>Editar</b></td>
+                            <td class="col-md-6"><b>Examinar</b></td>
+                            <td class="col-md-7"><b>Eliminar</b></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{for usuario in usuarios:}}
+                        {{for catalogo in catalogos:}}
                             <tr>
                                 <td class="col-md-4">
-                                    {{ =usuario.usbid}}
+                                    {{ =catalogo.nombre}}
                                 </td>
-                                <td class="col-md-5">{{ =usuario.nombres}}</td>
-                                <td class="col-md-6">{{ =usuario.apellidos}}</td>
-                                <td class="col-md-7">{{ =usuario.tipo}}</td>
-                                <td class="col-md-1">
-                                    <a href = "{{=URL(f='vModificarRol', args=[ usuario.usbid ] )}}">
+                                <td class="col-md-5">
+                                    <a href = "{{=URL(f='#')}}">
                                         {{=IMG(_src=URL('static', 'iconos/Edit.png')), }}
                                     </a>
                                 </td>
-                                <td class="col-md-1">
-                                    <a href = "{{=URL(f='vEliminarUsuario', args=[ usuario.usbid ] )}}">
+                                <td class="col-md-6">
+                                    <a href = "{{=URL(f='vAgregarElementoCampo', args=[ catalogo.nombre ])}}">
+                                        {{=IMG(_src=URL('static', 'iconos/Examine_26x26.png')), }}
+                                    </a>
+                                </td>
+                                <td class="col-md-7">
+                                    <a href = "{{=URL(f='eliminarCampos', args=[ catalogo.nombre ])}}">
                                         {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
                                     </a>
                                 </td>
@@ -117,6 +113,9 @@
                         {{pass}}
                     </tbody>
                 </table>
+                </p>
+                <br/>
+                
             </section><!-- close main -->
         </section>
         <!-- Es un footer pues -->

@@ -96,10 +96,13 @@ footer {
 	padding: 10px 0px;
 }
 
-footer nav{
+footer nav {
 	overflow: hidden;	/* Resuelve problema con float:right */
 	background: #AFC1CB;
 	padding: 4px 5px;
+    display: inline-block;
+    float: none;
+    vertical-align: top;
 }
 
 footer nav ul {
@@ -107,7 +110,7 @@ footer nav ul {
 }
 
 footer nav ul li {
-	float: left;
+	float: right;
 	padding: 0px 3px;
 }
 

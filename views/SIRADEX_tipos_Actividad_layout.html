@@ -29,7 +29,7 @@
                     <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
-					<li><a href = "#">Contactenos</a></li>
+					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
 					<li><a href = "#">Busqueda</a></li>
 					<li> | </li>
@@ -50,30 +50,31 @@
 					<li><a href = "{{=URL(c='default',f='vMenuPrincipal')}}">Usuario</a></li>
                     {{else:}}
                     {{pass}}
-
-                     
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>
 		</header>
-			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			
 			<!-- Menu de navegacion lateral -->
 			<aside>
 				<ul>
 					<li id="layout_aside_gestionar">
                         <h4> Gestionar:</h4>
                     </li>
-					<li id="layout_aside_validaciones">
+                    <li id="layout_aside_agregar_tipo">
                         <a href="#">
-                            Validaciones
+                            Búsquedas Avanzadas
                         </a>
                     </li>
-                    <li id=layout_aside_tipos_de_actividad>
+					<li id=layout_aside_tipos_de_actividad>
                         <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">
-                           Tipos de Actividad
+                            Tipos de Actividad
+                        </a>
+                    </li>
+					<li id="layout_aside_agregar_tipo">
+                        <a href="#">
+                            Validaciones
                         </a>
                     </li>
 				</ul>

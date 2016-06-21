@@ -12,10 +12,9 @@ header, .main, footer {
 	width: 90%;
 	max-width: 1060px;
 	margin: 20px auto;	/* Esto hace que se centre (con espaciado de 20px) */
-	
 }
 
-header nav{
+header nav {
 	overflow: hidden;	/* Resuelve problema con float:right */
 	background: #AFC1CB;
 	padding: 4px 5px;
@@ -72,10 +71,13 @@ footer {
 	padding: 10px 0px;
 }
 
-footer nav{
+footer nav {
 	overflow: hidden;	/* Resuelve problema con float:right */
 	background: #AFC1CB;
 	padding: 4px 5px;
+    display: inline-block;
+    float: none;
+    vertical-align: top;
 }
 
 footer nav ul {
@@ -89,4 +91,8 @@ footer nav ul li {
 
 footer nav ul li a {
 	text-decoration: none;
+}
+
+section img {
+    width: 26px;
 }
