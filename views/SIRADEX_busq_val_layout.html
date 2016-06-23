@@ -5,9 +5,14 @@
 		<meta charset = "UTF-8">
 		{{include 'web2py_ajax.html'}}
 		{{response.files.append(URL('static','css/layoutStyle.css'))}}
+        {{response.files.append(URL('static','js/jquery-ui.min.js'))}}
+        {{response.files.append(URL('static','css/jquery-ui.min.css'))}}
+
 		<!-- hago el link con el CSS de esta pagina -->
 		<link href="{{=URL('static', 'css/layoutStyle.css')}}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link href="{{=URL('static', 'js/jquery-ui.min.js')}}"  type="text/js" />
+		<link href="{{=URL('static', 'css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
+
 		<title> SIRADEX </title>
 		
 	</head>
@@ -20,25 +25,20 @@
 			</div>
 			
 			<!-- Menu del headder -->
-<nav>
+						<nav>
 				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href="{{=URL(c='default',f='logout_cas')}}">
-                    <span class="glyphicon glyphicon-user"></span>
-                     Cerrar Sesion
-                    </a></li>
-                    <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
-					<li><a href = "#">Contáctenos</a></li>
+					<li><a href = "#">Contactenos</a></li>
 					<li> | </li>
-					<li><a href = "{{=URL(c='busq_val', f='busqueda.html')}}">Busqueda</a></li>
+					<li><a href = "#">Busqueda</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL(c='default',f='vMenuPrincipal')}}">Inicio</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL(c='default',f='vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
                     <li> | </li>
-					<li><a href = "{{=URL(c='default',f='vMenuAdmin')}}">Administrador</a></li>
+					<li><a href = "{{=URL(c='default', f='vMenuAdmin')}}">Administrador</a></li>
 					<li> | </li>
                     <li><a href = "{{=URL(c='default',f='vMenuDex')}}">DEX</a></li>
 					<li> | </li>
@@ -54,27 +54,24 @@
 				</ul>
 			</nav>
 		</header>
+			
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
-			<!-- Menu de navegacion lateral -->
+            
+            <!-- Menu de navegacion lateral -->
 			<aside>
 				<ul>
 					<li id="layout_aside_gestionar">
                         <h4> Gestionar:</h4>
                     </li>
-                    <li id="layout_aside_agregar_tipo">
-                        <a href="#">
-                            Búsquedas Avanzadas
-                        </a>
-                    </li>
-					<li id=layout_aside_tipos_de_actividad>
-                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">
-                            Tipos de Actividad
-                        </a>
-                    </li>
-					<li id="layout_aside_agregar_tipo">
+					<li id="layout_aside_validaciones">
                         <a href="{{=URL(c='busq_val', f='gestionar_validacion.html')}}">
                             Validaciones
+                        </a>
+                    </li>
+                    <li id=layout_aside_tipos_de_actividad>
+                        <a href="{{=URL(c='tipo_actividad', f='gestionar.html')}}">
+                           Tipos de Actividad
                         </a>
                     </li>
 				</ul>
@@ -93,7 +90,7 @@
 		
 		
 		<!-- Es un footer pues -->
-        <footer>
+		<footer>
 			<nav>
 				<ul>
 					<li><a href = "#">Buscador</a></li>
@@ -105,6 +102,7 @@
 					<li><a href = "#">Directorio USB</a></li>
 					<li> | </li>
 					<li><a href = "#">Calendario</a></li>
+					<li> | </li>
 					<!-- No se como hacer esto en web2py --^  -->
 				</ul>
 			</nav>

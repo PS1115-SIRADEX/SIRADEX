@@ -1,0 +1,55 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'SIRADEX_busq_val_layout.html'}}
+
+<head>
+    {{response.files.append(URL('static','css/validacion.css'))}}
+    <link href="{{=URL('static', 'css/validacion.css')}}" rel="stylesheet" type="text/css" />
+</head>
+<h1 id="banner_h1">
+
+<body>
+    <h4> Validación de Actividades </h4>
+    <div class = "session_message">
+        {{= session.message or ''}}
+        {{ session.message = '' }}
+    </div>
+    <hr/>
+    <br/>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td class="col-md-4">ID Actividad</td>
+            <td class="col-md-7">ID Tipo Actividad</td>
+            <td class="col-md-1">Validar</td>
+            <td class="col-md-1">Rechazar</td>
+        </tr>
+        </thead>
+        <tbody>
+            {{for actividad in actividades:}}
+                <tr>
+                    <td class="col-md-4">
+                        {{=actividad.id_actividad}}
+                    </td>
+                    
+                    <td class="col-md-6">
+                        {{=actividad.id_tipo}}
+                    </td>
+                        
+                       
+           
+                    <td class="col-md-1">
+                        <a href="{{=URL(f='validar.html', args=[actividad.id_actividad])}}">
+                            {{=IMG(_src=URL('static','iconos/Add_26x26.png'))}}
+                        </a>
+                    </td>
+                    <td class="col-md-1">
+                        <a href="{{=URL(f='rechazar.html', args=[actividad.id_actividad])}}">
+                            {{=IMG(_src=URL('static','iconos/Eliminar_26x26.png'))}}
+                        </a>
+                    </td>
+                </tr>
+            {{pass}}
+        </tbody>
+    </table>
+</body>
+</h1>

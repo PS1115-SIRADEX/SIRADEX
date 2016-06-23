@@ -1,10 +1,12 @@
-{{extend 'actividad/index.html'}}
+{{#extend 'actividad/index.html'}}
+{{extend 'SIRADEXLayout.html'}}
+
 {{block titulo}}{{=nombre_tipo}}{{end}}
 {{block contenido}}
 <h2>Los campos con asteriscos <span style="color:red">*</span> son obligatorios</h2>
 <br>
 <p>
-	Los campos con el nombre en negrita sirven para ingresar a los participantes de la actividad. El usuario que esta registrando la Actividad debe ser seleccionado en al menos uno de estos campos.
+	Los campos con el nombre en negrita sirven para ingresar a los participantes de la actividad. El usuario que esta registrando la Actividad debe ser seleccionado en al menos uno de estos campos.{{tipo_campo}}
 </p>
 <br>
 {{=form}}

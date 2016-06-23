@@ -1,4 +1,4 @@
-{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+{{extend 'SIRADEXLayout.html'}}
 
 <head>
     {{response.files.append(URL('static','css/agregarTipo.css')) }}
@@ -6,21 +6,20 @@
 </head>
 
 <body>
-    <h4> Gestionar Papelera </h4>
+    <h3 id="titulo"> Gestión de Archivo Histórico </h3>
 
     <div class = "session_message">
         {{= session.message or ''}}
         {{ session.message = '' }}
     </div>
-    <hr/>
     <br/>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <td class="col-md-4">Nombre</td>
-            <td class="col-md-7">Descripcion</td>
-            <td class="col-md-1"> </td>
-            <td class="col-md-1"> </td>
+            <th class="col-md-4">Nombre</td>
+            <th class="col-md-7">Descripcion</td>
+            <th class="col-md-1"> </td>
+            <!-- <td class="col-md-1"> </td> -->
         </tr>
         </thead>
         <tbody>
@@ -37,11 +36,13 @@
                                 {{=IMG(_src=URL('static', 'iconos/restaurar.png'))}}
                         </a>
                     </td>
+                    <!-- BOTON DE ELIMINAR, FUE QUITADO PARA EVITAR ELIMINAR TIPOS DE MANERA PERMANENTE, LA FUNCIONALIDAD SIGUE ACIVA
                     <td class="col-md-1">
-                        <a href = "{{=URL(f='eliminar_tipo_papelera.html', args=[ tipo.id_tipo ] )}}">
-                                {{=IMG(_src=URL('static', 'iconos/ex.png'))}}
+                        <input type="image" src="{{=URL('static', 'iconos/Delete_26x26.png')}}"
+                               onClick="if(confirm('Esta seguro que desea eliminar de manera permanente este tipo de actividad?'))
+                                        {window.location.href = '{{=URL(f='eliminar_tipo_papelera.html', args=[ tipo.id_tipo ] )}}';}">
                         </a>
-                    </td>
+                    </td> -->
                 </tr>
             {{pass}}
         </tbody>

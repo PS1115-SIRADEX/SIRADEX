@@ -1,89 +1,11 @@
-<!DOCTYPE html>
-{{include 'layout.html'}}
-<html>
-	<head>
-		<meta charset = "UTF-8">
-		{{include 'web2py_ajax.html'}}
-		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/verPerfil.css')}}" rel="stylesheet" type="text/css" />
-		<title> SIRADEX </title>
-	</head>
-
-	<body>
-		<header>
-			<!-- Banner de SIRADEX -->
-			<div id = "logo">
-				{{=IMG(_src=URL('static', 'images/banner.jpg')) }}
-			</div>
-			<!-- Menu del headder -->
-			<nav>
-				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
-                    <span class="glyphicon glyphicon-user"></span>
-                     Cerrar Sesion
-                    </a></li>
-                    <li> | </li>
-					<li><a href = "#">Ayuda</a></li>
-					<li> | </li>
-					<li><a href = "#">Contáctenos</a></li>
-					<li> | </li>
-					<li><a href = "#">Busqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
-                    {{ if admin == 1: }}
-                    <li> | </li>
-					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
-					<li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-                    {{ elif admin == 2: }}
-                    <li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-                    {{else:}}
-                    {{pass}}
-                    <li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
-				</ul>
-			</nav>
-		</header>
-			
-		<!-- Contenido principal de la pagina -->
-		<section class = "main">
-			<h4> 
-				<div id ="titulo"> Editar Perfil </div>
-			</h4>
-			<br>
-			
-			<!-- En esta seccion va todo el contenido de la pagina -->
-                <div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                    <div class=" container-fluid col-xs-6">
-                     {{=form1}}
-                     {{=form}}
-                    </div>
-                    <div class="container-fluid col-md-2">
-                    </div>
-                </div>
-			
-		</section><!-- close main -->
-		
-		
-		<!-- Es un footer pues -->
-				<!-- Es un footer pues -->
-		<footer>
-			<nav>
-				<ul>
-					<li><a href = "#">Buscador</a></li>
-					<li> | </li>
-					<li><a href = "#">Webmail</a></li>
-					<li> | </li>
-					<li><a href = "#">Aula Virtual USB</a></li>
-					<li> | </li>
-					<li><a href = "#">Directorio USB</a></li>
-					<li> | </li>
-					<li><a href = "#">Calendario</a></li>
-				</ul>
-			</nav>
-		</footer>
-	</body>
-</html>
+{{ extend 'SIRADEXLayout.html' }}
+<h3>
+    <div id ="titulo"> Editar Perfil </div>
+</h3>
+<br>
+<div class="container-fluid col-md-4 col-md-offset-4">
+    {{=form1}}
+</div>
+<div class="container-fluid col-md-4 col-md-offset-4">
+    {{=form}}
+</div>

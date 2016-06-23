@@ -30,7 +30,7 @@ def login_cas():
         ssl._create_default_https_context = ssl._create_unverified_context
         url = "https://secure.dst.usb.ve/validate?ticket="+\
               request.vars.getfirst('ticket') +\
-              "&service=http%3A%2F%2F127.0.0.1:8001%2FSiraDex%2Fdefault%2Flogin_cas"
+              "&service=http%3A%2F%2F127.0.0.1:8007%2FSiraDex%2Fdefault%2Flogin_cas"
         req = urllib2.Request(url)
         response = urllib2.urlopen(req)
         the_page = response.read()
@@ -86,7 +86,7 @@ def vRegistroUsuario():
         form = SQLFORM.factory(
             Field("USBID", default=session.usuario["usbid"],writable = False),
             Field('Nombres',default=session.usuario["first_name"],writable = False),
-            Field('Apellidos', default=session.usuario["last_name"],writable=False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             readonly=True)
 
         #Realiza las modificaciones sobre la base de datos en funcion de lo que introduzca el usuario.
@@ -114,7 +114,7 @@ def vRegistroUsuario():
 def vVerPerfil():
     if session.usuario != None:
 	if session.usuario["tipo"] == "Bloqueado":
-	    redirect(URL("index"))		 
+	    redirect(URL(
         admin = 4
         if(session.usuario["tipo"] == "DEX"):
             admin = 2
@@ -134,9 +134,9 @@ def vVerPerfil():
         form = SQLFORM.factory(
             Field("USBID", default=session.usuario["usbid"],writable = False),
             Field('Nombres',default=session.usuario["first_name"],writable = False),
-            Field('Apellidos', default=session.usuario["last_name"],writable=False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             Field('Correo_Institucional', default=correo_i,writable=False),
-            Field('Telefono',label = "Teléfono", default=tlf,writable=False),
+            Field('Telefono', default=tlf,writable=False),
             Field('Correo_Alternativo', default=correo_a,writable=False),
             readonly=True)
         return dict(form1 = form,admin = admin)
@@ -157,8 +157,6 @@ def vMenuPrincipal():
 
 def vMenuDex():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
             admin = 4
             if(session.usuario["tipo"] == "DEX"):
@@ -175,8 +173,6 @@ def vMenuDex():
 
 def vEditarPerfil():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if(session.usuario["tipo"] == "DEX"):
             admin = 2
         elif(session.usuario["tipo"] == "Administrador"):
@@ -186,7 +182,7 @@ def vEditarPerfil():
         form = SQLFORM.factory(
             Field("USBID", default=session.usuario["usbid"],writable = False),
             Field('Nombres',default=session.usuario["first_name"],writable = False),
-            Field('Apellidos', default=session.usuario["last_name"],writable=False),
+            Field('apellidos', default=session.usuario["last_name"],writable=False),
             readonly=True)
         usuarios = db(db.USUARIO).select()
         # Modificar datos del perfil.
@@ -215,8 +211,6 @@ def vEditarPerfil():
 
 def vMenuAdmin():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "Administrador":
             session.message = ""
             return response.render(admin = get_tipo_usuario())
@@ -227,8 +221,6 @@ def vMenuAdmin():
 
 def vGestionarUsuarios():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "Administrador":
             aux = db(db.USUARIO).select(db.USUARIO.usbid,db.USUARIO.nombres,db.USUARIO.apellidos,db.USUARIO.tipo)
             return dict(usuarios = aux,message = session.message, admin=get_tipo_usuario())
@@ -239,8 +231,6 @@ def vGestionarUsuarios():
     
 def vAgregarUsuario():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "Administrador":
             message = ""
             datosCompAux = ["","","","","","","",""]    # En esta lista guardaremos todos los datos que seran extraidos del LDAP para crear el nuevo usuario
@@ -321,8 +311,6 @@ def vAgregarUsuario():
         
 def vEliminarUsuario():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "Administrador":
             if len(request.args)!=0 :
                 if request.args[0] != session.usuario["usbid"]:
@@ -340,8 +328,6 @@ def vEliminarUsuario():
 
 def vModificarRol():
     if session.usuario != None:
-        if session.usuario["tipo"] == "Bloqueado":
-            redirect(URL("index"))
         if session.usuario["tipo"] == "Administrador":
             message= ""
             form = SQLFORM.factory(

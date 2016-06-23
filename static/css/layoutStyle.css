@@ -3,8 +3,13 @@
 	padding: 0;
 }
 
+table {
+	background-color: #FFFFFF;
+}
+
 body {
 	background: #FFFFFF;
+	/*background: #3f446b;*/
 }
 
 header, .main, footer {
@@ -15,7 +20,7 @@ header, .main, footer {
 	
 }
 
-header nav{
+header nav {
 	overflow: hidden;	/* Resuelve problema con float:right */
 	background: #AFC1CB;
 	padding: 4px 5px;
@@ -34,35 +39,13 @@ header nav ul li a {
 	text-decoration: none;
 }
 
-.main aside {
-	float: left;
-	width: 15%;
-}
-
-.main aside ul {
-	list-style: none;
-}
-
-.main aside ul li {
-	padding: 5px 0px;
-	text-align: right;
-	color: #47A2D0;
-}
-
-.main aside ul li a {
-	text-decoration: none;
-	color: #47A2D0;
-}
-
 .main .contenido {
-	width: 80%;
+	width: 85%;
 	float: left;
-	padding: 2%;
-	/*border-style: solid;*/
+	padding: 0% 0% 0% 2%;
 }
 
 footer {
-	background: #AFC1CB;
 	text-align: center;
 	margin: auto auto;
 	clear: both;
@@ -76,21 +59,40 @@ footer nav {
     display: inline-block;
     float: none;
     vertical-align: top;
+    width: 100%;
 }
 
 footer nav ul {
 	list-style: none;	/* Quita los puntos */
-}
-
-footer nav ul li {
-	float: right;
-	padding: 0px 3px;
-}
-
-footer nav ul li a {
-	text-decoration: none;
+	padding-left: 25%;
+	padding-right: 25%;
 }
 
 a img {
     width: 26px;
+}
+
+/* aside */
+aside {
+	float: left;
+	width: 15%;
+    padding: 5px 0px;
+    text-align: center;
+}
+
+aside ul li a {
+    text-align: center;
+}
+
+.dropdown-menu {
+    margin-top: -41px;
+    margin-left:158px;
+}
+
+input#icono {
+    width: 26px;
+}
+
+#titulo {
+    text-align: center;
 }

@@ -1,4 +1,5 @@
-{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+{{#extend 'SIRADEX_tipos_Actividad_layout.html'}}
+{{extend 'SIRADEXLayout.html'}}
 <link href="{{=URL('static', 'css/camposFormStyle.css')}}" rel="stylesheet" type="text/css" />
 <div class = "session_message">
     {{ = session.message or ''}}
@@ -12,7 +13,8 @@ Agregue la cantidad de campos que desee
             <tr>
                 <td class="col-md-6">Nombre</td>
                 <td class="col-md-3">Tipo</td>
-                <td class="col-md-2">Oblgitorio</td>
+                <td class="col-md-2">Obligatorio</td>
+                <td class="col-md-1"></td>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +23,11 @@ Agregue la cantidad de campos que desee
                     <td class="col-md-6">{{=campo.CAMPO.nombre}}</td>
                     <td class="col-md-3">{{=campo.CAMPO.lista}}</td>
                     <td class="col-md-2">{{=campo.CAMPO.obligatorio}}</td>
+                    <td class="col-md-1">
+                        <a href = "{{=URL(f='eliminar_campo', args=[ campo.CAMPO.id_campo ] )}}">
+                            {{=IMG(_src=URL('static', 'iconos/Delete_26x26.png'))}}
+                        </a>
+                    </td>
                 </tr>
             {{pass}}
         </tbody>
@@ -31,9 +38,10 @@ Agregue la cantidad de campos que desee
     {{= form.custom.begin}}
     <table class="table table-condensed">
         <tr>
-        <td class="col-md-1">Nombre</td>     <td class="col-md-3">{{= form.custom.widget.nombre}}</td>
-        <td class="col-md-1">Tipo</td>       <td class="col-md-2">{{= form.custom.widget.lista}}</td>
-        <td class="col-md-3">Obligatorio</td><td class="col-md-1">{{= form.custom.widget.obligatorio}}</td>
+        <td class="col-md-2">Nombre</td>     <td class="col-md-3">{{= form.custom.widget.Nombre}}</td>
+        <td class="col-md-1">Tipo</td>       <td class="col-md-2">{{= form.custom.widget.Tipo}}</td>
+        <td class="col-md-2">Obligatorio</td><td class="col-md-1">{{= form.custom.widget.Obligatorio}}</td>
+        <td class="col-md-2">Catalogo</td>   <td class="col-md-3">{{= form.custom.widget.Catalogo}}</td>
         <td class="col-md-2">{{= form.custom.submit}}</td>
         </tr>
     </table>

@@ -129,6 +129,8 @@ auth.settings.reset_password_requires_verification = True
 # auth.enable_record_versioning(db)
 #raise HTTP(404)
 
+tipo_campos = ['fecha', 'participante', 'ci', 'comunidad', 'telefono', 'texto', 'cantidad entera', 'cantidad decimal']
+
 #db.usuario.drop()
 db.define_table('USUARIO',
     Field('ci',type='string',length=8, notnull=True,required=True, unique=True),
@@ -138,7 +140,7 @@ db.define_table('USUARIO',
     Field('telefono',type='string',length=15),
     Field('correo_inst', type='string',notnull=True),
     Field('correo_alter', type='string'),
-    Field('tipo',type='string',length=15,requires=IS_IN_SET(['Usuario', 'DEX', 'Administrador'])),
+    Field('tipo',type='string',length=15,requires=IS_IN_SET(['Usuario', 'DEX', 'Administrador','Bloqueado'])),
     primarykey=['ci'],
     migrate = False,
     # redefine=True,
@@ -217,7 +219,7 @@ db.define_table('CAMPO',
     Field('nombre',type='string', length=64,
         requires = [IS_NOT_IN_DB(db, 'CAMPO.nombre',error_message='')]),
     Field('lista', type='string', length=64,
-        requires = [IS_IN_SET(['fecha', 'participantes'])],
+        requires = [IS_IN_SET(tipo_campos)],
         widget = SQLFORM.widgets.options.widget),
     Field('despliega_cat',db.CATALOGO.id_catalogo),
     primarykey=['id_campo'],
@@ -290,10 +292,10 @@ db.define_table('CATALOGO_TIENE_CAMPO',
     migrate=False
 );
 
-db.define_table('CATALOGO_CONTIENE_CAMPO',
+db.define_table('VALORES_CAMPO_CATALOGO',
     Field('id_catalogo',db.CATALOGO.id_catalogo),
     Field('id_campo_cat',db.CAMPO_CATALOGO.id_campo_cat),
-    Field('valor',type='string', length=256),
-    primarykey=['id_catalogo','id_campo_cat'],
+    Field('valor',type='string', length=256, notnull = True),
+    primarykey=['id_catalogo','id_campo_cat','valor'],
     migrate=False
 );

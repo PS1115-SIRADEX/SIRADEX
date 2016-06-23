@@ -21,14 +21,14 @@
 				<ul>
                     <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
                     <span class="glyphicon glyphicon-user"></span>
-                    Cerrar Sesion
+                    Cerrar Sesión
                     </a></li>
                     <li> | </li>
 					<li><a href = "#">Ayuda</a></li>
 					<li> | </li>
 					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
-					<li><a href = "#">Busqueda</a></li>
+					<li><a href = "#">Búsqueda</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
                     <li> | </li>
@@ -72,20 +72,26 @@
 				</ul>
 			</aside>
             <section class = "contenido">
-                <h4 id = "titulo"> Gestión de Catalogos </h4>
-                <p>
-                    {{ = forma}}
-                <div id = "error">
-                    {{=message}}
+                <div class = "session_message">
+                    {{ =session.message or ''}}
                 </div>
+                <h4 id = "titulo"> Gestión de Catalogos </h4>
                 <br/>
+                    <td class="col-md-2">
+                        <a href = "{{=URL(f='vAgregarCatalogo')}}">
+                            {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')), }}
+                            Agregar Catalogo
+                        </a>
+                    </td>
+                <br/>
+                <div class= "table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <td class="col-md-4"><b>Nombre</b></td>
-                            <td class="col-md-5"><b>Editar</b></td>
-                            <td class="col-md-6"><b>Examinar</b></td>
-                            <td class="col-md-7"><b>Eliminar</b></td>
+                            <td class="col-md-2"><b>Editar</b></td>
+                            <td class="col-md-2"><b>Examinar</b></td>
+                            <td class="col-md-2"><b>Eliminar</b></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,26 +100,25 @@
                                 <td class="col-md-4">
                                     {{ =catalogo.nombre}}
                                 </td>
-                                <td class="col-md-5">
-                                    <a href = "{{=URL(f='#')}}">
+                                <td class="col-md-2">
+                                    <a href = "{{=URL(f='vModificarCatalogo', args=[ catalogo.nombre ])}}">
                                         {{=IMG(_src=URL('static', 'iconos/Edit.png')), }}
                                     </a>
                                 </td>
-                                <td class="col-md-6">
-                                    <a href = "{{=URL(f='vAgregarElementoCampo', args=[ catalogo.nombre ])}}">
+                                <td class="col-md-2">
+                                    <a href = "{{=URL(f='vMostrarCatalogo', args=[ catalogo.nombre ])}}">
                                         {{=IMG(_src=URL('static', 'iconos/Examine_26x26.png')), }}
                                     </a>
                                 </td>
-                                <td class="col-md-7">
-                                    <a href = "{{=URL(f='eliminarCampos', args=[ catalogo.nombre ])}}">
-                                        {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
-                                    </a>
+                                <td class="col-md-2">
+                                <a onClick = "if(confirm('¿Está seguro de que desea eliminar el catalogo?')) {window.location.href = '{{=URL(f='eliminarCampos',args=[ catalogo.nombre ] )}}';}">
+                                    {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
                                 </td>
                             </tr>
                         {{pass}}
                     </tbody>
                 </table>
-                </p>
+                </div>
                 <br/>
                 
             </section><!-- close main -->

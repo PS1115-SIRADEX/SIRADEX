@@ -1,49 +1,9 @@
-<!DOCTYPE html>
-{{include 'layout.html'}}
-<html>
-	<head>
-		<meta charset = "UTF-8">
-		{{include 'web2py_ajax.html'}}
-		<!-- hago el link con el CSS de esta pagina -->
-		<link href="{{=URL('static', 'css/menuAdmin.css')}}" rel="stylesheet" type="text/css" />
-		<title> SIRADEX </title>
-		
-	</head>
-
-	<body>
-		<header>
-			<!-- Banner de SIRADEX -->
-			<div id = "logo">
-				{{=IMG(_src=URL('static', 'images/banner.jpg')) }}
-			</div>
-			<!-- Menu del headder -->
-			<nav>
-				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
-                    <span class="glyphicon glyphicon-user"></span>
-                     Cerrar Sesion
-                    </a></li>
-                    <li> | </li>
-					<li><a href = "#">Ayuda</a></li>
-					<li> | </li>
-					<li><a href = "#">Contáctenos</a></li>
-					<li> | </li>
-					<li><a href = "#">Busqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
-                    <li> | </li>
-					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
-					<li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
-				</ul>
-			</nav>
-		</header>
+{{ extend 'SIRADEXLayout.html' }}
+{{#include 'layout.html'}}
 		<!-- Contenido principal de la pagina -->
 		<section class = "main">
 			<!-- Menu de navegacion lateral -->
-			<aside>
+			<!-- <aside>
 				<ul>
 					<li id="layout_aside_gestionar">
                         <h4> Gestionar:</h4>
@@ -54,7 +14,7 @@
                         </a>
                     </li>
 					<li id="layout_aside_catalogos">
-                        <a href="#">
+                        <a href="{{=URL(c='catalogo', f='vGestionarCatalogo')}}">
                             Catalogos
                         </a>
                     </li>
@@ -69,7 +29,7 @@
                         </a>
                     </li>
 				</ul>
-			</aside>
+			</aside> -->
 			<h4>
 			    <div id="bienvenido">  Bienvenido al SIRADEX </div>
 			</h4>
@@ -83,24 +43,3 @@
 			</section><!-- close contenido -->
 			
 		</section><!-- close main -->
-		
-		
-		<!-- Es un footer pues -->
-		<footer>
-			<nav>
-				<ul>
-					<li><a href = "#">Buscador</a></li>
-					<li> | </li>
-					<li><a href = "#">Webmail</a></li>
-					<li> | </li>
-					<li><a href = "#">Aula Virtual USB</a></li>
-					<li> | </li>
-					<li><a href = "#">Directorio USB</a></li>
-					<li> | </li>
-					<li><a href = "#">Calendario</a></li>
-				</ul>
-			</nav>
-		</footer>
-
-	</body>
-</html>

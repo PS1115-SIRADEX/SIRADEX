@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-{{include 'SIRADEXLayout.html'}}
-
+{{include 'layout.html'}}
 <html>
 	<head>
 		<meta charset = "UTF-8">
@@ -45,7 +44,7 @@
                     {{else:}}
                     {{pass}}
                     <li> | </li>
-                    <li><a href = "{{=URL(c='actividad',f='gestionar')}}">Inicio</a></li>
+                    <li><a href = "{{=URL('gestionar')}}">Inicio</a></li>
 				</ul>
 			</nav>
 		</header>

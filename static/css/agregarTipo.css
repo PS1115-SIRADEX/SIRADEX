@@ -9,7 +9,7 @@ table {
   border: 2px solid #47A2D0;
 }
 
-table tr td {
+table tr td, table tr th {
     width: 25%;
     word-break: break-all;
     border: 1px solid black;
@@ -21,11 +21,6 @@ table tr td {
     color: green;
     text-align: center;
 }
-
-#titulo {
-    color: blue;
-}
-
 /* Botones
 -------------------------------------------------------------------------*/
 #botonEliminar{

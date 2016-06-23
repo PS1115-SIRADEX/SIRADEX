@@ -72,13 +72,46 @@
 				</ul>
 			</aside>
             <section class = "contenido">
+                <div class = "session_message">
+                    {{ =session.message or ''}}
+                </div>
                 <h4 id = "titulo"> Gestión de Catalogos </h4>
-                <p>
-                    <a href = "{{=URL('vAgregarElementoCampo')}}">
+                <a href = "{{=URL(f='vAgregarElementoCampo',args =[nombre])}}">
                         {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')) }}
-                        Agregar Elemento
+                        Agregar Valores
                     </a>
-                </p>
+                <div class = "table-responsive">
+                <table class = "table table-bordered">
+                    <thead>
+                        <tr>
+                            {{for campo in campos_guardados:}}
+                                <td class="col-md">{{=campo.CAMPO_CATALOGO.nombre}}</td>
+                        {{pass}}
+                            <td class="col-md-2"><b>Editar</b></td>
+                            <td class="col-md-2"><b>Eliminar</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {{for j in range (0,len(filas)):}}
+                                <tr>
+                                {{for i in filas[j]:}}
+                                    <td class="col-md">{{=i['valor']}}</td>
+                                {{pass}}
+                                <td class="col-md-2">
+                                    <a href = "{{=URL(f='vModificarCampos',args =[filas[j][0]['valor'],j])}}">
+                                        {{=IMG(_src=URL('static', 'iconos/Edit.png')), }}
+                                    </a>
+                                </td>
+                                <td class="col-md-2">
+                                <a onClick = "if(confirm('¿Está seguro de que desea eliminar los valores?')) {window.location.href = '{{=URL(f='eliminarValorCampo',args=[ filas[j][0]['valor'] ] )}}';}">
+                                    {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
+                                </td>
+                              {{pass}}
+                              </tr>
+                    </tbody>
+                </table>
+                </div>
+                <br/>
             </section><!-- close main -->
         </section>
         <!-- Es un footer pues -->

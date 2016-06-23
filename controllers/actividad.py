@@ -4,18 +4,15 @@
 from pprint import pprint
 
 def gestionar():
-#    if session.usuario != None:
-#        if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
-#            if(session.usuario["tipo"] == "DEX"):
-#                admin = 2
-#            elif(session.usuario["tipo"] == "Administrador"):
-#                admin = 1
-#            else:
-#                admin = 0
-#        else:
-#            redirect(URL(c ="actividad",f="gestionar"))
-#    else:
-#        redirect(URL(c ="default",f="index"))
+    if session.usuario != None:
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
+    else:
+        redirect(URL(c ="default",f="index"))
 
     rows = db(db.ACTIVIDAD.ci_usuario_crea==session.usuario['cedula']).select()
     detalles = {}
@@ -33,35 +30,29 @@ def gestionar():
     return locals()
 
 def tipos():
-#    if session.usuario != None:
-#        if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
-#            if(session.usuario["tipo"] == "DEX"):
-#                admin = 2
-#            elif(session.usuario["tipo"] == "Administrador"):
-#                admin = 1
-#            else:
-#                admin = 0
-#        else:
-#            redirect(URL(c ="actividad",f="gestionar"))
-#    else:
-#        redirect(URL(c ="default",f="index"))
+    if session.usuario != None:
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
+    else:
+        redirect(URL(c ="default",f="index"))
 
     rows = db(db.TIPO_ACTIVIDAD.papelera=='False').select()
     return locals()
 
 def agregar():
-#    if session.usuario != None:
-#        if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
-#            if(session.usuario["tipo"] == "DEX"):
-#                admin = 2
-#            elif(session.usuario["tipo"] == "Administrador"):
-#                admin = 1
-#            else:
-#                admin = 0
-#        else:
-#            redirect(URL(c ="actividad",f="gestionar"))
-#    else:
-#        redirect(URL(c ="default",f="index"))
+    if session.usuario != None:
+    	if(session.usuario["tipo"] == "DEX"):
+		 admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+		admin = 1
+	else:
+		admin = 0
+    else:
+        redirect(URL(c ="default",f="index"))
 
     tipo = int(request.args(0))
     rows = db(db.ACT_POSEE_CAMPO.id_tipo_act == tipo).select()
@@ -72,12 +63,25 @@ def agregar():
         nombre = rows_campo.nombre
         nombre = nombre.replace(" ", "_")
         obligatorio = rows_campo.obligatorio
+        tipo_campo = ''
+        tipo_campo = rows_campo.lista
 
         if obligatorio:
-            fields.append(Field(nombre,'string',requires=IS_NOT_EMPTY()))
+            if tipo_campo in ['imagen','documento'] :
+                fields.append(Field(nombre,'upload',uploadfolder='archivosUsuarios',requires=IS_NOT_EMPTY()))
+            elif tipo_campo in ['participante','texto']:
+                fields.append(Field(nombre,'string',requires=IS_NOT_EMPTY()))
         else:
-            fields.append(Field(nombre,'string'))
+            if tipo_campo in ['imagen','documento']:
+                fields.append(Field(nombre,'upload',uploadfolder='archivosUsuarios'))
+            elif tipo_campo in ['participantes','texto']:
+                fields.append(Field(nombre,'string'))
+            elif tipo_campo in ['cantidad decimal','cantidad entera']:
+                fields.append(Field(nombre,'string'))
+            elif tipo_campo in ['fecha']:
+                fields.append(Field(nombre,'date'))
 
+    #fields.append(Field(nombre,requires=IS_IN_SET([(1,'Method1'), (2,'Method2'), (3,'Method3')], zero='Select')))
 
     form=SQLFORM.factory(*fields)
 
@@ -96,18 +100,15 @@ def agregar():
     return locals()
 
 def modificar():
-#    if session.usuario != None:
-#        if session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador":
-#            if(session.usuario["tipo"] == "DEX"):
-#                admin = 2
-#            elif(session.usuario["tipo"] == "Administrador"):
-#                admin = 1
-#            else:
-#                admin = 0
-#        else:
-#            redirect(URL(c ="actividad",f="gestionar"))
-#    else:
-#        redirect(URL(c ="default",f="index"))
+    if session.usuario != None:
+        if(session.usuario["tipo"] == "DEX"):
+            admin = 2
+        elif(session.usuario["tipo"] == "Administrador"):
+            admin = 1
+        else:
+            admin = 0
+    else:
+        redirect(URL(c ="default",f="index"))
 
     id_act = int(request.args(0))
     rows = db(db.TIENE_CAMPO.id_actividad == id_act).select()

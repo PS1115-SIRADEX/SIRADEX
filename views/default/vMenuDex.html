@@ -28,7 +28,7 @@
 					<li> | </li>
 					<li><a href = "#">Contáctenos</a></li>
 					<li> | </li>
-					<li><a href = "#">Busqueda</a></li>
+					<li><a href = "{{=URL(c='busq_val', f='busqueda')}}">Busqueda</a></li>
 					<li> | </li>
 					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
                     {{ if admin == 1: }}
@@ -66,7 +66,7 @@
                         </a>
                     </li>
 					<li id="layout_aside_agregar_tipo">
-                        <a href="#">
+                        <a href="{{=URL(c='busq_val', f='gestionar_validacion.html')}}">
                             Validaciones
                         </a>
                     </li>
