@@ -1,88 +1,11 @@
-<!DOCTYPE html>
-{{include 'layout.html'}}
-<html>
-    <head>
-        <meta charset = "UTF-8">
-        {{include 'web2py_ajax.html'}}
-        <!-- hago el link con el CSS de esta pagina -->
-        <link href="{{=URL('static', 'css/registroUsuario.css')}}" rel="stylesheet" type="text/css" />
-        <title> SIRADEX </title>
-    </head>
-
-    <body>
-        <header>
-            <!-- Banner de SIRADEX -->
-            <div id = "logo">
-                {{=IMG(_src=URL('static', 'images/banner.jpg')) }}
-            </div>
-            
-            <!-- Menu del headder -->
-			<nav>
-				<ul>
-                    <li><a class ='btn btn-primary btn-xs' href='logout_cas'>
-                    <span class="glyphicon glyphicon-user"></span>
-                    Cerrar Sesión
-                    </a></li>
-                    <li> | </li>
-					<li><a href = "#">Ayuda</a></li>
-					<li> | </li>
-					<li><a href = "#">Contáctenos</a></li>
-					<li> | </li>
-					<li><a href = "#">Búsqueda</a></li>
-					<li> | </li>
-					<li><a href = "{{=URL('vVerPerfil')}}">Ver Perfil</a></li>
-                    <li> | </li>
-					<li><a href = "{{=URL('vMenuAdmin')}}">Administrador</a></li>
-					<li> | </li>
-                    <li><a href = "{{=URL('vMenuDex')}}">DEX</a></li>
-					<li> | </li>
-                    <li><a href = "{{=URL('vMenuPrincipal')}}">Inicio</a></li>
-				</ul>
-			</nav>
-        </header>
-            
+{{ extend 'SIRADEXLayout.html' }}
         <!-- Contenido principal de la pagina -->
         <section class = "main">
-        <!-- Menu de navegacion lateral -->
-            <aside>
-                <ul>
-					<li id="layout_aside_gestionar">
-                        <h4> Gestionar:</h4>
-                    </li>
-                    <li id="layout_aside_backups">
-                        <a href="#">
-                            Backups
-                        </a>
-                    </li>
-					<li id="layout_aside_catalogos">
-                        <a href="#">
-                            Catalogos
-                        </a>
-                    </li>
-                    <li id="layout_aside_logs">
-                        <a href="#">
-                            Logs
-                        </a>
-                    </li>
-					<li id="layout_aside_usuarios">
-                        <a href="vGestionarUsuarios">
-                            Usuarios
-                        </a>
-                    </li>
-				</ul>
-			</aside>
             <section class = "contenido">
                 <div class = "session_message">
-                    {{ =session.message or ''}}
+                    {{ =message or ''}}
                 </div>
-                <h4 id = "titulo"> Gestión de Catalogos </h4>
-                <br/>
-                    <td class="col-md-2">
-                        <a href = "{{=URL(f='vAgregarCatalogo')}}">
-                            {{=IMG(_src=URL('static', 'iconos/Add_26x26.png')), }}
-                            Agregar Catalogo
-                        </a>
-                    </td>
+                <h3 id = "titulo"> Gestión de Catalogos </h3>
                 <br/>
                 <div class= "table-responsive">
                 <table class="table table-bordered">
@@ -123,22 +46,5 @@
                 
             </section><!-- close main -->
         </section>
-        <!-- Es un footer pues -->
-        <footer>
-            <nav>
-                <ul>
-                    <li></li>
-                    <li><a href = "#">Buscador</a></li>
-                    <li> | </li>
-                    <li><a href = "#">Webmail</a></li>
-                    <li> | </li>
-                    <li><a href = "#">Aula Virtual USB</a></li>
-                    <li> | </li>
-                    <li><a href = "#">Directorio USB</a></li>
-                    <li> | </li>
-                    <li><a href = "#">Calendario</a></li>
-                </ul>
-            </nav>
-        </footer>
     </body>
 </html>

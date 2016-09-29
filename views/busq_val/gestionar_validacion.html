@@ -1,5 +1,5 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
-{{extend 'SIRADEX_busq_val_layout.html'}}
+{{extend 'SIRADEXLayout.html'}}
 
 <head>
     {{response.files.append(URL('static','css/validacion.css'))}}
@@ -18,10 +18,10 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <td class="col-md-4">ID Actividad</td>
-            <td class="col-md-7">ID Tipo Actividad</td>
-            <td class="col-md-1">Validar</td>
-            <td class="col-md-1">Rechazar</td>
+            <th class="col-md-4">ID Actividad</td>
+            <th class="col-md-4">Nombre Actividad</td>
+            <th class="col-md-1">Validar</td>
+            <th class="col-md-1">Rechazar</td>
         </tr>
         </thead>
         <tbody>
@@ -31,9 +31,14 @@
                         {{=actividad.id_actividad}}
                     </td>
                     
-                    <td class="col-md-6">
-                        {{=actividad.id_tipo}}
-                    </td>
+                    {{for tipo in tipos:}}
+                        {{if tipo.id_tipo == actividad.id_tipo:}}
+                            <td class="col-md-6">
+                                {{=tipo.nombre}}
+                            </td>
+                            {{break}}
+                        {{pass}}
+                    
                         
                        
            
@@ -44,9 +49,10 @@
                     </td>
                     <td class="col-md-1">
                         <a href="{{=URL(f='rechazar.html', args=[actividad.id_actividad])}}">
-                            {{=IMG(_src=URL('static','iconos/Eliminar_26x26.png'))}}
+                            {{=IMG(_src=URL('static','iconos/Delete_26x26.png'))}}
                         </a>
                     </td>
+                    {{pass}}
                 </tr>
             {{pass}}
         </tbody>

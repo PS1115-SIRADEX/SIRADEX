@@ -129,7 +129,7 @@ auth.settings.reset_password_requires_verification = True
 # auth.enable_record_versioning(db)
 #raise HTTP(404)
 
-tipo_campos = ['fecha', 'participante', 'ci', 'comunidad', 'telefono', 'texto', 'cantidad entera', 'cantidad decimal']
+tipo_campos = ['fecha', 'participante', 'ci', 'comunidad', 'telefono', 'texto','documento', 'imagen', 'cantidad entera', 'cantidad decimal']
 
 #db.usuario.drop()
 db.define_table('USUARIO',
@@ -229,7 +229,9 @@ db.define_table('CAMPO',
 
 db.define_table('CAMPO_CATALOGO',
     Field('id_campo_cat', type='id'),
-    Field('tipo_cat',type='string', length=256),
+    Field('tipo_cat',type='string', length=256,        
+          requires = [IS_IN_SET(tipo_campos)],
+        widget = SQLFORM.widgets.options.widget),
     Field('nombre', type='string', length=64),
     Field('eliminar', type='boolean'),
     primarykey=['id_campo_cat'],

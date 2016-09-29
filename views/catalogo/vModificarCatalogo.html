@@ -1,4 +1,4 @@
-{{extend 'SIRADEX_tipos_Actividad_layout.html'}}
+{{ extend 'SIRADEXLayout.html' }}
 <link href="{{=URL('static', 'css/camposFormStyle.css')}}" rel="stylesheet" type="text/css" />
 <div class = "session_message">
     {{ =session.message}}
@@ -24,7 +24,7 @@ Agregue la cantidad de campos que desee
                         <a onClick = "if(confirm('¿Está seguro de que desea eliminar el campo?')) {window.location.href = '{{=URL(f='eliminarCampos2',args=[ campo.CATALOGO.nombre, campo.CAMPO_CATALOGO.id_campo_cat ] )}}';}">
                                     {{=IMG(_src=URL('static', 'iconos/Delete.png')), }}
                                     </a></td>
-                </tr>
+            </tr>
             {{pass}}
         </tbody>
     </table>
@@ -46,7 +46,7 @@ Agregue la cantidad de campos que desee
 <div id="buttons" class="container-fluid">
     <row>
         <div class="col-md-2">
-        <input type=button class="btn btn-primary" onClick="parent.location='{{=URL('catalogo', 'agregarTipoAux')}}'" value='Finalizar'>
+        <input type=button class="btn btn-primary" onClick="parent.location='{{=URL('catalogo', 'agregarTipoAux2')}}'" value='Finalizar'>
         </div>
     </row>
 </div>

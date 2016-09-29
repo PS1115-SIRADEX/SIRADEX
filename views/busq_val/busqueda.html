@@ -1,5 +1,5 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
-{{ extend 'SIRADEX_busq_val_layout.html'}}
+{{ extend 'SIRADEXLayout.html'}}
 
 <head>
     {{response.files.append(URL('static','css/validacion.css'))}}
@@ -10,12 +10,12 @@
 <h1 id="banner_h1">
 
 <body>
-    <h4> Búsquedas Públicas </h4>
+    <h3 id = "titulo"> Búsquedas Públicas </h4>
+    <br>
     <div class = "session_message">
         {{= session.message or ''}}
         {{ session.message = '' }}
     </div>
-    <hr/>
     <br/>
     <input type="text" id="search" placeholder="Busqueda">
     <section class = "main">
@@ -39,9 +39,9 @@
             <table id="table" class="table table-bordered">
                 <thead>
                 <tr>
-                    <td class="col-md-4">ID</td>
-                    <td class="col-md-7">Estado actividad</td>
-                    <td class="col-md-7">Nombre actividad</td>
+                    <th class="col-md-4">ID</td>
+                    <th class="col-md-7">Nombre actividad</td>
+                    <th class="col-md-7">Estado actividad</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,12 +50,26 @@
                             <td class="col-md-4">
                                 {{=actividad.id_actividad}}
                             </td>
-                            <td class="col-md-7">
-                                {{=actividad.estado}}
-                            </td>
-                            <td class="col-md-7">
-                                {{=actividad.nombre}}
-                            </td>
+                            {{for tipo in tipos:}}
+                                {{if actividad.id_tipo == tipo.id_tipo:}}
+                                    <td class="col-md-7">
+                                        {{=tipo.nombre}}
+                                    </td>
+                                    {{break}}
+                                {{pass}}
+                            
+                            
+                                {{if actividad.estado != None:}}
+                                    <td class="col-md-7">
+                                        {{=actividad.estado}}
+                                    </td>
+                                {{else:}}
+                                    <td class="col-md-7">
+                                        Inactivo
+                                    </td>
+                                {{pass}}
+                            {{pass}}
+                            
                         </tr>
                     {{pass}}
                 </tbody>

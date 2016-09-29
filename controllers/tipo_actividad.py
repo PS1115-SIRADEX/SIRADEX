@@ -50,16 +50,21 @@ def agregar_tipo():
                         )
     '''
     catalogo = db(db.CATALOGO.nombre == 'Programas').select(db.CATALOGO.ALL).first()
-    query = reduce(lambda a, b: (a&b),[db.CATALOGO_TIENE_CAMPO.id_catalogo == catalogo.id_catalogo,
-                                       db.CAMPO_CATALOGO.id_campo_cat == db.CATALOGO_TIENE_CAMPO.id_campo_cat,
-                                       db.CAMPO_CATALOGO.nombre == 'Nombre',
-                                       db.VALORES_CAMPO_CATALOGO.id_campo_cat == db.CAMPO_CATALOGO.id_campo_cat
-                                      ])
-    
-    programas = db(query).select(db.VALORES_CAMPO_CATALOGO.valor)
     programas2 = []
-    for i in range(0, len(programas)):
-        programas2.append(programas[i].valor)
+    if(catalogo != None):
+        #programas2.append(catalogo.id_catalogo)
+        query = reduce(lambda a, b: (a&b),[db.CATALOGO_TIENE_CAMPO.id_catalogo == catalogo.id_catalogo,
+                                           db.CAMPO_CATALOGO.nombre == 'Nombre',
+                                           db.CAMPO_CATALOGO.id_campo_cat == db.CATALOGO_TIENE_CAMPO.id_campo_cat,
+                                           db.VALORES_CAMPO_CATALOGO.id_campo_cat == db.CAMPO_CATALOGO.id_campo_cat,
+                                           db.VALORES_CAMPO_CATALOGO.id_catalogo == catalogo.id_catalogo
+                                          ])
+    
+        programas = db(query).select(db.VALORES_CAMPO_CATALOGO.ALL)
+    
+        for i in range(0, len(programas)):
+            programas2.append(programas[i].valor)
+            #programas2.append(programas[i].id_catalogo)
 
     formulario = SQLFORM.factory(
                         Field('Nombre', requires=IS_NOT_EMPTY()),
@@ -97,8 +102,7 @@ tambien tiene una tabla con los campos que ya han sido agregados
 def agregar_tipo_campos():
     # Obtengo el nombre del tipo_actividad desde el objeto global 'session'
     nombre_tipo = session.form_nombre
-    tipo_campos = ['fecha', 'participante', 'ci', 'comunidad', 'telefono', 'texto', 'cantidad entera', 'cantidad decimal']
-    
+    tipo_campos = ['fecha', 'participante', 'ci', 'comunidad', 'telefono', 'texto','documento', 'imagen', 'cantidad entera', 'cantidad decimal']
     # Creo query para realizar busqueda de los campos que ya han sido agregados
     # a ese tipo actividad
     query = reduce(lambda a, b: (a&b),[db.TIPO_ACTIVIDAD.nombre == nombre_tipo,
@@ -120,7 +124,7 @@ def agregar_tipo_campos():
     form = SQLFORM.factory(
                     Field('Nombre', requires=IS_NOT_EMPTY()),
                     Field('Tipo', requires=IS_IN_SET(tipo_campos)),
-                    Field('Obligatorio', requires=IS_NOT_EMPTY(), widget=SQLFORM.widgets.boolean.widget, default = False),
+                    Field('Obligatorio', widget=SQLFORM.widgets.boolean.widget),
                     Field('Catalogo', requires=IS_IN_SET(nombres_catalogos), default='---'),
                     labels = {'Catalogo' : 'Catálogo'},
                     submit_button = 'Agregar'
@@ -136,6 +140,9 @@ def agregar_tipo_campos():
                 indice = i
         
         # Agrego el campo a la base
+        if request.vars.Obligatorio == None:
+            request.vars.Obligatorio = False
+            
         if indice == -1:
             db.CAMPO.insert(nombre = request.vars.Nombre,
                             obligatorio = request.vars.Obligatorio,
@@ -203,7 +210,7 @@ def eliminar_campos():
     # Borro el tipo actiidad
     db(db.TIPO_ACTIVIDAD.nombre == nombre_tipo).delete()
     
-    redirect(URL('vGestionarCatalogo'))
+    redirect(URL('gestionar.html'))
 
 '''
  Funcion que envia un tipo actividad a la papelera
@@ -252,7 +259,7 @@ def eliminar_tipo_papelera():
 
     # Guardo mensaje de exito
     session.message = 'Tipo Eliminado'
-    redirect(URL('gestionar_papelera.html'))
+    redirect(URL('gestionar_archivo_historico.html'))
 
 
 '''
@@ -307,7 +314,7 @@ def modificar_tipo():
     db.TIPO_ACTIVIDAD.programa.writable = False
 
     form = SQLFORM.factory(db.TIPO_ACTIVIDAD, record=tipo,
-                   fields = ['nombre', 'tipo_p_r', 'descripcion', 'programa', 'producto'],
+                   fields = ['nombre', 'tipo_p_r', 'descripcion', 'programa'],
                    labels={'tipo_p_r': 'Tipo de Producto','descripcion':'Descripción'},
                    submit_button='Relizar Cambios'
                    )

@@ -39,7 +39,7 @@
                     {{ elif admin == 2: }}
                         <li><a href="{{=URL(c='default', f='setVista.html', args=[1])}}">DEX</a></li>
                     {{ pass }}
-                        <li><a href="{{=URL(c='default', f='setVista.html', args=[0])}}">Usuario</a></li>
+                        <li><a href="{{=URL(c='default', f='setVista.html', args=[0])}}">Actividades</a></li>
                         <li><a href="{{=URL(c='default', f='vVerPerfil.html')}}">Ver Perfil</a></li>
                         <li><a href="{{=URL(c='busq_val', f='busqueda.html')}}">Búsqueda</a></li>
                         <li><a href="#">Ayuda</a></li>
@@ -68,9 +68,8 @@
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actividades</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Gestionar</a></li>
-                                    <li><a href="#">Agregar</a></li>
-                                    <li><a href="#">Modificar</a></li>
+                                    <li><a href="{{=URL(c='actividad', f='gestionar.html')}}">Gestionar</a></li>
+                                    <li><a href="{{=URL(c='actividad', f='tipos.html')}}">Agregar</a></li>
                                 </ul>
                             </li>
                         {{ elif session.vista == 1: }}
@@ -88,9 +87,7 @@
                                 </ul>
                             </li>
                             <!-- Validaciones -->
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="dropdown" href="{{=URL(c='busq_val', f='gestionar_validacion.html')}}">Validaciones</a>
-                            </li>
+                            <li><a href="{{=URL(c='busq_val', f='gestionar_validacion.html')}}"> Validaciones</a></li>
                         {{ elif session.vista == 2:}}
                             <!-- Consultar Log -->
                             <li class="dropdown">
@@ -111,7 +108,7 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Catálogos</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{=URL(c='catalogo', f='vGestionarCatalogo.html')}}">Gestionar</a></li>
-                                    <li><a href="{{=URL(c='catalogo', f='vGestionarCatalogo.html')}}">Agregar</a></li>
+                                    <li><a href="{{=URL(c='catalogo', f='vAgregarCatalogo.html')}}">Agregar</a></li>
                                 </ul>
                             </li>
                             <!-- Usuarios -->

@@ -8,9 +8,10 @@
     <a href="{{=request.env.http_referer}}">Volver</a>
 </button>
 -->
-<button class="btn btn-default">
-    <a href="{{=URL('modificar_tipo', args=[tipo.id_tipo])}}">Modificar</a>
-</button>
+<!-- <button class="btn btn-default" onClick="{{=URL(c='tipo_actividad', f='modificar_tipo.html', args=[tipo.id_tipo])}}"> -->
+<!-- <button class="btn btn-link"> -->
+    <a href="{{=URL(c='tipo_actividad', f='modificar_tipo.html', args=[tipo.id_tipo])}}">Modificar</a>
+<!-- </button> -->
 <br/>
 <br/>
 
@@ -28,7 +29,7 @@
         <tr>
             <th class="col-md-4">Nombre</td>
             <th class="col-md-3">Tipo</td>
-            <th class="col-md-2">Oblgitorio</td>
+            <th class="col-md-2">Obligatorio</td>
         </tr>
     </thead>
     <tbody>

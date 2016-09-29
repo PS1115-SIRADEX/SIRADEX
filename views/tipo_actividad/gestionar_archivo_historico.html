@@ -19,7 +19,7 @@
             <th class="col-md-4">Nombre</td>
             <th class="col-md-7">Descripcion</td>
             <th class="col-md-1"> </td>
-            <!-- <td class="col-md-1"> </td> -->
+            <td class="col-md-1"> </td>
         </tr>
         </thead>
         <tbody>
@@ -32,17 +32,21 @@
                     </td>
                     <td class="col-md-7">{{ =tipo.descripcion}}</td>
                     <td class="col-md-1">
-                        <a href = "{{=URL(f='restaurar_tipo.html', args=[ tipo.id_tipo ] )}}">
+                        <input id="icono" type="image" src="{{=URL('static', 'iconos/restaurar.png')}}"
+                               onClick="if(confirm('¿Está seguro que quiere restaurar este tipo de actividad?'))
+                                        {window.location.href = '{{=URL(f='restaurar_tipo.html', args=[ tipo.id_tipo ] )}}';}">
+
+                         <!--<a href = "{{=URL(f='restaurar_tipo.html', args=[ tipo.id_tipo ] )}}">
                                 {{=IMG(_src=URL('static', 'iconos/restaurar.png'))}}
-                        </a>
+                        </a> -->
                     </td>
-                    <!-- BOTON DE ELIMINAR, FUE QUITADO PARA EVITAR ELIMINAR TIPOS DE MANERA PERMANENTE, LA FUNCIONALIDAD SIGUE ACIVA
+                    <!--BOTON DE ELIMINAR, FUE QUITADO PARA EVITAR ELIMINAR TIPOS DE MANERA PERMANENTE, LA FUNCIONALIDAD SIGUE ACIVA -->
                     <td class="col-md-1">
-                        <input type="image" src="{{=URL('static', 'iconos/Delete_26x26.png')}}"
-                               onClick="if(confirm('Esta seguro que desea eliminar de manera permanente este tipo de actividad?'))
+                        <input id="icono" type="image" src="{{=URL('static', 'iconos/ex.png')}}"
+                               onClick="if(confirm('¿Está seguro que desea eliminar de manera permanente este tipo de actividad? Se borraran todas las actividades asociadas al mismo.'))
                                         {window.location.href = '{{=URL(f='eliminar_tipo_papelera.html', args=[ tipo.id_tipo ] )}}';}">
                         </a>
-                    </td> -->
+                    </td>
                 </tr>
             {{pass}}
         </tbody>

@@ -53,10 +53,13 @@ def busqueda():
     # Muestro los ids, el estado y nombres de las actividades validadas
     aux = db(query).select(db.ACTIVIDAD.id_actividad,
                            db.ACTIVIDAD.estado,
-                           db.TIPO_ACTIVIDAD.nombre
+                           db.ACTIVIDAD.id_tipo
                           )
+    
+    aux1 = db(query).select(db.TIPO_ACTIVIDAD.nombre, db.TIPO_ACTIVIDAD.id_tipo
+                         )
 
-    return dict(actividades = aux, admin = admin) # no necesita el admin, creo
+    return dict(tipos = aux1, actividades = aux, admin = admin) # no necesita el admin, creo
 
 # Vista de validaciones
 def gestionar_validacion():
@@ -83,10 +86,10 @@ def gestionar_validacion():
     # Muestro los ids y nombres de las actividades a validar o rechazar
     aux = db(query).select(db.ACTIVIDAD.id_actividad, db.ACTIVIDAD.id_tipo
                          )
-    aux1 = db(query).select(db.TIPO_ACTIVIDAD.descripcion, db.TIPO_ACTIVIDAD.id_tipo
+    aux1 = db(query).select(db.TIPO_ACTIVIDAD.nombre, db.TIPO_ACTIVIDAD.id_tipo
                          )
 
-    return dict(tipo_actividad = aux1, actividades = aux, admin = admin)
+    return dict(tipos = aux1, actividades = aux, admin = admin)
 
 # Metodo para validar una actividad
 def validar():
